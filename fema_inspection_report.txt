@@ -1,0 +1,102 @@
+======================================================================
+FEMA API SAMPLE INSPECTION REPORT
+======================================================================
+
+── DENIAL RECORD FIELDS ──────────────────────────────────────────────
+  declarationRequestNumber                  example: 99067
+  region                                    example: 7
+  stateAbbreviation                         example: "KS"
+  state                                     example: "Kansas                        "
+  tribalRequest                             example: false
+  declarationRequestDate                    example: "0999-08-05T00:00:00.000Z"
+  declarationRequestType                    example: "Major Disaster"
+  incidentName                              example: "KS - High Winds & Flooding 6/28/99"
+  requestedIncidentTypes                    example: "Severe Storm"
+  requestedIncidentBeginDate                example: "1999-06-26T00:00:00.000Z"
+  requestedIncidentEndDate                  example: "1999-06-28T00:00:00.000Z"
+  currentRequestStatus                      example: "Turndown"
+  requestStatusDate                         example: "1999-08-24T00:00:00.000Z"
+  ihProgramRequested                        example: false
+  iaProgramRequested                        example: false
+  paProgramRequested                        example: false
+  hmProgramRequested                        example: false
+  incidentId                                example: 1999062901
+  incidentBeginDate                         example: "1999-06-28T00:00:00.000Z"
+  id                                        example: "602ba5ac-44bb-4616-b8d6-3c285dbe6572"
+
+── APPROVAL RECORD FIELDS (post-dedup) ───────────────────────────────
+  femaDeclarationString                     example: "DR-1-GA"
+  disasterNumber                            example: 1
+  state                                     example: "GA"
+  declarationType                           example: "DR"
+  declarationDate                           example: "1953-05-02T00:00:00.000Z"
+  fyDeclared                                example: 1953
+  incidentType                              example: "Tornado"
+  declarationTitle                          example: "TORNADO"
+  ihProgramDeclared                         example: false
+  iaProgramDeclared                         example: true
+  paProgramDeclared                         example: true
+  hmProgramDeclared                         example: true
+  incidentBeginDate                         example: "1953-05-02T00:00:00.000Z"
+  incidentEndDate                           example: "1953-05-02T00:00:00.000Z"
+  disasterCloseoutDate                      example: "1954-06-01T00:00:00.000Z"
+  tribalRequest                             example: false
+  fipsStateCode                             example: "13"
+  fipsCountyCode                            example: "000"
+  placeCode                                 example: "0"
+  designatedArea                            example: "Statewide"
+  declarationRequestNumber                  example: "53013"
+  lastIAFilingDate                          example: null
+  incidentId                                example: "53013"
+  region                                    example: 4
+  designatedIncidentTypes                   example: null
+  lastRefresh                               example: "2024-08-27T18:22:14.800Z"
+  hash                                      example: "413ff808d79f08a6710f6b78f361d5a7de692711"
+  id                                        example: "8943dfcf-9786-4e51-8889-d62014034bb2"
+
+── DENIAL KEY FIELD POPULATION ───────────────────────────────────────
+  declarationRequestNumber             present in 1000/1000 rows  (100%)
+  declarationRequestDate               present in 1000/1000 rows  (100%)
+  state                                present in 1000/1000 rows  (100%)
+  incidentType                         present in    0/1000 rows  (0%)
+  fyDeclared                           present in    0/1000 rows  (0%)
+  ihDenied                             present in    0/1000 rows  (0%)
+  iaDenied                             present in    0/1000 rows  (0%)
+  paDenied                             present in    0/1000 rows  (0%)
+  hmDenied                             present in    0/1000 rows  (0%)
+
+── DENIAL DEDUPLICATION ANALYSIS ─────────────────────────────────────
+  Distinct declarationRequestNumbers : 999
+  Numbers appearing >1 time          : 1
+
+  Sample group for requestNumber=78004 (2 rows):
+    {"declarationRequestNumber": 78004, "declarationRequestDate": "1977-10-21T00:00:00.000Z", "state": "Virgin Islands of the U.S.    ", "incidentType": null, "fyDeclared": null, "ihDenied": null, "iaDenied": null, "paDenied": null, "hmDenied": null}
+    {"declarationRequestNumber": 78004, "declarationRequestDate": "1977-10-21T00:00:00.000Z", "state": "Virgin Islands of the U.S.    ", "incidentType": null, "fyDeclared": null, "ihDenied": null, "iaDenied": null, "paDenied": null, "hmDenied": null}
+
+  Distinct (requestNumber, state) pairs : 999
+  Pairs appearing >1 time               : 1
+
+  Sample group for (78004, 'Virgin Islands of the U.S.    ') (2 rows):
+    {"declarationRequestNumber": 78004, "declarationRequestDate": "1977-10-21T00:00:00.000Z", "state": "Virgin Islands of the U.S.    ", "incidentType": null, "fyDeclared": null, "ihDenied": null, "iaDenied": null, "paDenied": null, "hmDenied": null}
+    {"declarationRequestNumber": 78004, "declarationRequestDate": "1977-10-21T00:00:00.000Z", "state": "Virgin Islands of the U.S.    ", "incidentType": null, "fyDeclared": null, "ihDenied": null, "iaDenied": null, "paDenied": null, "hmDenied": null}
+
+  Distinct (requestNumber, state, incidentType) : 999
+  Triples appearing >1 time                     : 1
+
+── WHAT VARIES WITHIN A DENIAL GROUP? ────────────────────────────────
+  Request 78004 — fields that VARY  : []
+  Request 78004 — fields that agree : ['declarationRequestNumber', 'region', 'stateAbbreviation', 'state', 'tribalRequest', 'declarationRequestDate', 'declarationRequestType', 'incidentName', 'requestedIncidentTypes', 'requestedIncidentBeginDate', 'requestedIncidentEndDate', 'currentRequestStatus', 'requestStatusDate', 'ihProgramRequested', 'iaProgramRequested', 'paProgramRequested', 'hmProgramRequested', 'incidentId', 'incidentBeginDate', 'id']
+
+── DENIAL FLAG COMBINATIONS ──────────────────────────────────────────
+  ihDenied   iaDenied   paDenied   hmDenied    count
+  -------------------------------------------------------
+  None       None       None       None        1000
+
+── ROWS-PER-REQUEST DISTRIBUTION (declarationRequestNumber) ──────────
+  1 row(s) per request :   998 requests
+  2 row(s) per request :     1 requests
+
+── REQUEST NUMBERS IN BOTH APPROVED AND DENIED? ──────────────────────
+  Approval request numbers in sample  : 228
+  Denial  request numbers in sample   : 999
+  Overlap (same number in both)       : 0

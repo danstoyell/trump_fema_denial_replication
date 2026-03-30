@@ -1,6 +1,4 @@
-======================================================================
-FEMA DISASTER DECLARATION APPROVAL RATES BY PRESIDENT & STATE PARTY
-======================================================================
+# FEMA DISASTER DECLARATION APPROVAL RATES BY PRESIDENT & STATE PARTY
 
 President     Party  Approved   Denied   Total     Rate
 -------------------------------------------------------
@@ -21,9 +19,7 @@ Biden           Rep       118       23     141    83.7%
 Trump           Dem         4        8      12    33.3%
 Trump           Rep        27        8      35    77.1%
 
-======================================================================
-EXCLUDED RECORDS
-======================================================================
+## EXCLUDED RECORDS
 
 Territories / states not in alignment data  [122 approved, 16 denied, 138 total, 88.4% approval rate]
   State     Approved   Denied   Total     Rate

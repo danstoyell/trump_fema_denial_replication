@@ -5,11 +5,12 @@ classified by state party alignment, as a human-readable Markdown file.
 Output: trump2_records.md
 """
 
+import argparse
 import json
 import urllib.request
 import urllib.parse
 from collections import defaultdict
-from replicate_fema_analysis import get_state_alignment
+from replicate_fema_analysis import get_state_alignment, fetch_all_fema_web
 
 CUTOFF = "2025-01-20"
 OUTPUT_PATH = "trump2_records.md"
@@ -60,6 +61,25 @@ def fetch_approvals():
 
     print(f"Approvals: {len(raw)} rows → {len(deduped)} unique state-disasters")
     return deduped
+
+
+def fetch_approvals_fema_web():
+    """
+    Fetch DR declarations from v1/FemaWebDisasterDeclarations, filter to
+    Trump 2 term, and normalize into the same shape as fetch_approvals().
+    Already one row per disaster — no deduplication needed.
+    Field differences handled:
+      - stateCode → state (done by fetch_all_fema_web via normalize_fema_web_record)
+      - disasterName → declarationTitle (mapped here for the markdown renderer)
+    """
+    print("Fetching approved declarations from FemaWeb endpoint...")
+    all_recs = fetch_all_fema_web(include_emergency=False)
+    in_range = [r for r in all_recs if r.get("declarationDate", "")[:10] >= CUTOFF]
+    # Map disasterName → declarationTitle so approval_table_rows() renders correctly
+    for rec in in_range:
+        rec.setdefault("declarationTitle", rec.get("disasterName", "—"))
+    print(f"Approvals: {len(all_recs)} total → {len(in_range)} since {CUTOFF}")
+    return in_range
 
 
 def fetch_denials():
@@ -169,7 +189,7 @@ def denial_table_rows(recs):
     return "\n".join(lines)
 
 
-def write_markdown(buckets):
+def write_markdown(buckets, fema_web=False):
     lines = []
     lines.append("# FEMA Disaster Declarations — Trump 2nd Term (Jan 20, 2025–present)")
     lines.append("")
@@ -233,7 +253,9 @@ def write_markdown(buckets):
 
     lines.append("---")
     lines.append("")
-    lines.append("*Source: FEMA Disaster Declarations Summaries API (v2) and Declaration Denials API (v1). "
+    approvals_api = ("v1/FemaWebDisasterDeclarations" if fema_web
+                     else "v2/DisasterDeclarationsSummaries")
+    lines.append(f"*Source: FEMA {approvals_api} (approvals) and v1/DeclarationDenials (denials). "
                  "State party classifications from independent research covering all 50 states, 1981–2026.*")
 
     with open(OUTPUT_PATH, "w") as f:
@@ -244,7 +266,18 @@ def write_markdown(buckets):
 # ── Main ──────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    approvals = fetch_approvals()
+    parser = argparse.ArgumentParser(
+        description="Export Trump 2nd term FEMA records to Markdown."
+    )
+    parser.add_argument(
+        "--fema-web",
+        action="store_true",
+        help="Use v1/FemaWebDisasterDeclarations (disaster-level) instead of "
+             "v2/DisasterDeclarationsSummaries (county-level) for approvals.",
+    )
+    args = parser.parse_args()
+
+    approvals = fetch_approvals_fema_web() if args.fema_web else fetch_approvals()
     denials   = fetch_denials()
 
     buckets = defaultdict(lambda: {"approved": [], "denied": []})
@@ -262,4 +295,4 @@ if __name__ == "__main__":
     for k, v in buckets.items():
         print(f"  {k}: {len(v['approved'])} approved, {len(v['denied'])} denied")
 
-    write_markdown(buckets)
+    write_markdown(buckets, fema_web=args.fema_web)

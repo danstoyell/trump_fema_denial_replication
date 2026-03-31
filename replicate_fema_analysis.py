@@ -274,7 +274,7 @@ STATE_PARTY_DATA = {
     **{("TN", y): ("R", "R", "R") for y in range(2019, 2027)},  # Lee(R)/Blackburn(R)/Hagerty(R)
     **{("TN", y): ("R", "R", "R") for y in range(2007, 2019)},  # Haslam(R)/Alexander(R)/Corker(R)
     **{("TN", y): ("D", "R", "R") for y in range(2003, 2007)},  # Bredesen(D)/Alexander(R)/Frist(R) -> Mixed
-    **{("TN", y): ("D", "R", "R") for y in range(1995, 2003)},  # Sundquist(R)/Thompson(R)/Frist(R)
+    **{("TN", y): ("R", "R", "R") for y in range(1995, 2003)},  # Sundquist(R)/Thompson(R)/Frist(R)
     **{("TN", y): ("D", "D", "D") for y in range(1987, 1995)},  # McWherter(D)/Gore then Mathews(D)/Sasser(D) -> D-trifecta
     **{("TN", y): ("R", "D", "R") for y in range(1981, 1987)},  # Alexander(R)/Baker(R)/Sasser(D) -> Mixed
     
@@ -517,7 +517,7 @@ STATE_PARTY_DATA = {
     # MAINE
     **{("ME", y): ("D", "R", "I") for y in range(2019, 2027)},  # Mills(D)/Collins(R)/King(I) -> Mixed
     **{("ME", y): ("R", "R", "I") for y in range(2013, 2019)},  # LePage(R)/Collins(R)/King(I) -> Mixed
-    **{("ME", y): ("R", "R", "D") for y in range(2011, 2013)},  # LePage(R)/Collins(R)/Snowe(R) -> all R
+    **{("ME", y): ("R", "R", "R") for y in range(2011, 2013)},  # LePage(R)/Collins(R)/Snowe(R) -> all R
     **{("ME", y): ("D", "R", "R") for y in range(2003, 2011)},  # Baldacci(D)/Collins(R)/Snowe(R) -> Mixed
     **{("ME", y): ("I", "R", "R") for y in range(1995, 2003)},  # King(I)/Collins(R)/Snowe(R) -> Mixed
     **{("ME", y): ("R", "R", "D") for y in range(1987, 1995)},  # McKernan(R)/Cohen(R)/Mitchell(D) -> Mixed
@@ -583,9 +583,9 @@ def get_state_alignment(state, date_str, governor_only=False, two_thirds=False):
 # PART 2: FETCH AND PROCESS FEMA DATA
 # ============================================================================
 
-def fetch_declarations_page(skip=0, top=1000):
+def fetch_declarations_page(skip=0, top=1000, declaration_type="DR"):
     """Fetch a page of approved disaster declarations from FEMA API."""
-    filter_val = urllib.parse.quote("declarationType eq 'DR'")
+    filter_val = urllib.parse.quote(f"declarationType eq '{declaration_type}'")
     url = (
         f"https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
         f"?$top={top}&$skip={skip}"
@@ -606,13 +606,98 @@ def fetch_denials_page(skip=0, top=1000):
         f"?$top={top}&$skip={skip}"
         f"&$select=stateAbbreviation,declarationRequestDate,"
         f"requestedIncidentTypes,declarationRequestNumber,"
-        f"currentRequestStatus,requestStatusDate,"
+        f"currentRequestStatus,requestStatusDate,declarationRequestType,"
         f"ihProgramRequested,iaProgramRequested,paProgramRequested,hmProgramRequested"
         f"&$orderby=declarationRequestDate%20asc"
     )
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
         return json.loads(response.read().decode())
+
+# Type label mapping: new endpoint uses full strings, old uses abbreviations.
+# Normalization maps new → old so the rest of the pipeline is unchanged.
+_FEMA_WEB_TYPE_MAP = {
+    "Major Disaster":  "DR",
+    "Emergency":       "EM",
+    "Fire Management": "FM",
+    "Fire Suppression": "FS",
+}
+
+def fetch_fema_web_page(skip=0, top=1000):
+    """
+    Fetch a page from the v1/FemaWebDisasterDeclarations endpoint.
+    This endpoint differs from v2/DisasterDeclarationsSummaries in key ways:
+      - One row per disaster (already state-level; no county rows)
+      - declarationType uses full strings: 'Major Disaster', 'Emergency', etc.
+      - State is in 'stateCode' (not 'state')
+      - No declarationRequestNumber field
+      - Has disasterName and declarationRequestDate
+    Returns raw page dict; normalization is done in fetch_all_fema_web().
+    """
+    url = (
+        f"https://www.fema.gov/api/open/v1/FemaWebDisasterDeclarations"
+        f"?$top={top}&$skip={skip}"
+        f"&$orderby=declarationDate%20asc"
+    )
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        return json.loads(response.read().decode())
+
+
+def normalize_fema_web_record(rec):
+    """
+    Normalize a v1/FemaWebDisasterDeclarations record into the same field
+    shape expected by analyze() and the rest of the pipeline:
+      - state       ← stateCode
+      - declarationType ← mapped via _FEMA_WEB_TYPE_MAP ('Major Disaster' → 'DR')
+    All other fields used by analyze() (declarationDate, incidentType,
+    paProgramDeclared, iaProgramDeclared, hmProgramDeclared, disasterNumber)
+    have identical names and formats in both endpoints.
+    """
+    return {
+        **rec,
+        "state": rec.get("stateCode", "").strip(),
+        "declarationType": _FEMA_WEB_TYPE_MAP.get(rec.get("declarationType", ""),
+                                                    rec.get("declarationType", "")),
+    }
+
+
+def fetch_all_fema_web(include_emergency=False):
+    """
+    Fetch all records from v1/FemaWebDisasterDeclarations, normalize them,
+    and filter to the requested declaration types.
+
+    Because this endpoint is already one row per disaster (not per county),
+    no deduplication by (disasterNumber, state) is needed — but analyze()
+    will run the dedup step harmlessly since all keys will be unique.
+
+    Returns a list of normalized records ready to pass to analyze() as
+    approved_records.
+    """
+    all_records = []
+    skip = 0
+    while True:
+        data = fetch_fema_web_page(skip=skip)
+        records = data.get("FemaWebDisasterDeclarations", [])
+        if not records:
+            break
+        all_records.extend(records)
+        if len(records) < 1000:
+            break
+        skip += 1000
+        print(f"  Fetched {len(all_records)} records so far...")
+
+    # Normalize field names / type labels
+    normalized = [normalize_fema_web_record(r) for r in all_records]
+
+    # Filter to requested declaration types (DR always; EM if --include-emergency)
+    wanted = {"DR", "EM"} if include_emergency else {"DR"}
+    filtered = [r for r in normalized if r.get("declarationType") in wanted]
+
+    print(f"  {len(all_records)} total → {len(filtered)} after type filter "
+          f"({'DR+EM' if include_emergency else 'DR only'})")
+    return filtered
+
 
 def fetch_all_pages(fetch_func, entity_key):
     """Page through all records."""
@@ -635,7 +720,7 @@ def fetch_all_pages(fetch_func, entity_key):
 # ============================================================================
 
 def analyze(approved_records, denied_records, all_types=False, governor_only=False,
-            two_thirds=False):
+            two_thirds=False, include_emergency=False):
     """
     Compute approval rates by president and state party alignment.
 
@@ -644,6 +729,10 @@ def analyze(approved_records, denied_records, all_types=False, governor_only=Fal
     all_types: if True, skip incident-type filtering (include all DR requests)
     governor_only: if True, classify states by governor party alone (not trifecta)
     two_thirds: if True, classify as D/R when 2 of 3 offices match
+    include_emergency: if True, include Emergency (EM) denial requests in the
+                       denominator. Default is False (Major Disaster only) because
+                       approvals are DR-only, so including EM denials produces a
+                       mismatched comparison that deflates all approval rates.
     """
 
     # Deduplicate approved declarations by (disasterNumber, state)
@@ -706,6 +795,13 @@ def analyze(approved_records, denied_records, all_types=False, governor_only=Fal
     denied_records = [r for r in denied_records
                       if r.get("currentRequestStatus") == "Turndown"]
 
+    # Restrict to Major Disaster requests only by default, matching the DR-only
+    # filter on approvals. ~38% of denials are Emergency (EM) requests that have
+    # no approved counterpart in the dataset — including them deflates all rates.
+    if not include_emergency:
+        denied_records = [r for r in denied_records
+                          if r.get("declarationRequestType") == "Major Disaster"]
+
     # Deduplicate denials by declarationRequestNumber — the API has one row per
     # request (confirmed by inspection); the rare exact-duplicate is a FEMA data
     # entry error and should be collapsed.
@@ -724,14 +820,15 @@ def analyze(approved_records, denied_records, all_types=False, governor_only=Fal
     # Process denials — stateAbbreviation is the two-letter code in this API;
     # the `state` field contains the full name with trailing whitespace.
     for rec in denied_records:
-        date  = rec.get("declarationRequestDate")
+        # Use requestStatusDate (when the denial decision was made) to assign
+        # the correct president — this is the counterpart to declarationDate on
+        # the approvals side. Fall back to declarationRequestDate if missing.
+        date  = rec.get("requestStatusDate") or rec.get("declarationRequestDate")
         state = rec.get("stateAbbreviation", "").strip()
 
         # Guard against bogus years (e.g. "0999-..." data entry error).
-        # Fall back to requestStatusDate, then requestedIncidentBeginDate.
         if date and isinstance(date, str) and int(date[:4]) < 1900:
-            date = (rec.get("requestStatusDate")
-                    or rec.get("requestedIncidentBeginDate"))
+            date = rec.get("declarationRequestDate")
 
         if not (date and isinstance(date, str) and len(date) > 4):
             continue
@@ -986,59 +1083,108 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="FEMA disaster declaration partisan approval rate analysis."
+        description="FEMA disaster declaration partisan approval rate analysis.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+DECLARATION TYPE FLAGS (what gets counted):
+  default              Major Disaster (DR) approvals vs Major Disaster denials.
+                       Apples-to-apples: both sides are the same request type.
+  --include-emergency  Also fetch Emergency (EM) approvals and include Emergency
+                       denials. Approvals = DR+EM, Denials = DR+EM.
+                       Still apples-to-apples, just a wider scope.
+  --all-types          Within whichever declaration type(s) are included, count
+                       all incident types rather than natural disasters only.
+                       Applies the same filter to both sides.
+
+CLASSIFICATION FLAGS (how states are categorized):
+  default              Trifecta: governor + both senators must all be same party.
+  --governor-only      Classify by governor's party alone; senators ignored.
+  --two-thirds         Classify as D/R when 2 of 3 offices (gov + senators) match.
+"""
     )
     parser.add_argument(
         "--all-types",
         action="store_true",
-        help=(
-            "Include all incident types (default: natural disasters only). "
-            "Applies the same filter to both approvals and denials so the "
-            "comparison remains apples-to-apples."
-        ),
+        help="Count all incident types (default: natural disasters only).",
     )
     parser.add_argument(
         "--governor-only",
         action="store_true",
-        help=(
-            "Classify states by governor's party alone (default: trifecta — "
-            "governor + both senators must all match). With this flag a state "
-            "is D if the governor is Democrat, R if Republican, Mixed if Independent."
-        ),
+        help="Classify states by governor's party alone (default: full trifecta).",
     )
     parser.add_argument(
         "--two-thirds",
         action="store_true",
+        help="Classify as D/R when 2 of 3 offices (governor + senators) match.",
+    )
+    parser.add_argument(
+        "--include-emergency",
+        action="store_true",
         help=(
-            "Classify a state as D/R when at least 2 of the 3 offices "
-            "(governor + both senators) belong to that party."
+            "Include Emergency (EM) declarations on both sides: fetch EM approvals "
+            "and include EM denials. Keeps the comparison apples-to-apples at a "
+            "wider scope than DR-only."
+        ),
+    )
+    parser.add_argument(
+        "--fema-web",
+        action="store_true",
+        help=(
+            "Use the v1/FemaWebDisasterDeclarations endpoint instead of "
+            "v2/DisasterDeclarationsSummaries for approvals. Key differences: "
+            "already one row per disaster (no county rows to deduplicate), "
+            "uses full type strings ('Major Disaster'/'Emergency') which are "
+            "normalized automatically, and lacks declarationRequestNumber. "
+            "Useful as a cross-check against the default county-level endpoint."
         ),
     )
     args = parser.parse_args()
 
     print("FEMA Disaster Declarations Partisan Analysis - Replication Script")
     print("=" * 70)
-    if args.all_types:
-        print("Mode: ALL incident types (no type filtering)")
-    else:
-        print("Mode: Natural disasters only (default)")
-    if args.governor_only:
-        print("Classification: Governor party only")
-    elif args.two_thirds:
-        print("Classification: Two-thirds (2 of 3 offices must match)")
-    else:
-        print("Classification: Trifecta (governor + both senators)")
+    decl_scope = "DR + EM" if args.include_emergency else "DR only"
+    incident_scope = "all incident types" if args.all_types else "natural disasters only"
+    classification = ("governor only" if args.governor_only
+                      else "two-thirds" if args.two_thirds
+                      else "trifecta")
+    approvals_src = ("v1/FemaWebDisasterDeclarations (disaster-level)"
+                     if args.fema_web
+                     else "v2/DisasterDeclarationsSummaries (county-level)")
+    print(f"Declaration scope:  {decl_scope}")
+    print(f"Incident types:     {incident_scope}")
+    print(f"Classification:     {classification}")
+    print(f"Approvals source:   {approvals_src}")
 
     # NOTE: This script is designed to run against the live FEMA API.
     # If the API is unavailable, we demonstrate with the methodology.
 
     try:
         print("\nAttempting to fetch approved declarations from FEMA API...")
-        approved = fetch_all_pages(
-            fetch_declarations_page,
-            "DisasterDeclarationsSummaries"
-        )
-        print(f"Fetched {len(approved)} approved declaration records")
+        if args.fema_web:
+            # v1/FemaWebDisasterDeclarations: already one row per disaster,
+            # uses full type strings ('Major Disaster' / 'Emergency').
+            # fetch_all_fema_web() normalizes and filters in one call.
+            approved = fetch_all_fema_web(include_emergency=args.include_emergency)
+            print(f"Fetched {len(approved)} approved declaration records "
+                  f"(FemaWeb endpoint)")
+        else:
+            # v2/DisasterDeclarationsSummaries: one row per county per disaster.
+            # Deduplication by (disasterNumber, state) happens inside analyze().
+            approved = fetch_all_pages(
+                lambda skip: fetch_declarations_page(skip, declaration_type="DR"),
+                "DisasterDeclarationsSummaries"
+            )
+            print(f"Fetched {len(approved)} approved DR declaration records")
+
+            if args.include_emergency:
+                print("Fetching approved Emergency declarations...")
+                approved_em = fetch_all_pages(
+                    lambda skip: fetch_declarations_page(skip, declaration_type="EM"),
+                    "DisasterDeclarationsSummaries"
+                )
+                approved = approved + approved_em
+                print(f"Fetched {len(approved_em)} approved EM declaration records"
+                      f" ({len(approved)} total)")
 
         print("\nAttempting to fetch denied declarations from FEMA API...")
         denied = fetch_all_pages(
@@ -1049,10 +1195,13 @@ if __name__ == "__main__":
 
         results = analyze(approved, denied, all_types=args.all_types,
                           governor_only=args.governor_only,
-                          two_thirds=args.two_thirds)
-        suffix = "_all_types" if args.all_types else ""
+                          two_thirds=args.two_thirds,
+                          include_emergency=args.include_emergency)
+        suffix = "_fema_web" if args.fema_web else ""
+        suffix += "_all_types" if args.all_types else ""
         suffix += "_gov_only" if args.governor_only else ""
         suffix += "_two_thirds" if args.two_thirds else ""
+        suffix += "_incl_emergency" if args.include_emergency else ""
         output = f"fema_approval_rates{suffix}.png"
         plot_chart(results, output_path=output,
                    governor_only=args.governor_only, two_thirds=args.two_thirds)

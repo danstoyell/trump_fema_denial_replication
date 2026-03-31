@@ -796,7 +796,7 @@ def analyze(approved_records, denied_records):
 
     # Records with no matching presidential term
     np_total = no_pres_count["approved"] + no_pres_count["denied"]
-    print(f"\nOut-of-range dates (no matching presidential term): {np_total} records"
+    print(f"\nOut-of-range dates (pre-reagan): {np_total} records"
           f" ({no_pres_count['approved']} approved, {no_pres_count['denied']} denied)")
 
     return counts
@@ -901,8 +901,9 @@ def plot_chart(counts, output_path="fema_approval_rates.png"):
     footer = (
         "Note: States classified by party when governor and senators at time of "
         "request all belong to the same party.\n"
-        "Source: POLITICO's E&E News analysis of FEMA records\n"
-        "Thomas Frank/POLITICO"
+        "Source: Independent replication using FEMA Disaster Declarations Summaries "
+        "and Declaration Denials APIs. "
+        "Inspired by POLITICO/E&E News reporting (Thomas Frank)."
     )
     fig.text(0.065, 0.01, footer,
              fontsize=8, va="bottom", ha="left", color="#888888",

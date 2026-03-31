@@ -67,6 +67,18 @@ For each combination of presidential term and state alignment:
 approval rate = approved / (approved + denied)
 ```
 
+### Analysis Flags
+
+The script supports three flags that alter classification or filtering:
+
+| Flag | Effect |
+|---|---|
+| `--governor-only` | Classifies a state as D/R based solely on the governor's party. Senators are ignored. States with an Independent governor are Mixed. |
+| `--two-thirds` | Classifies a state as D/R when at least 2 of the 3 offices (governor + both senators) belong to that party. Widens the pool of classifiable states compared to the trifecta default. |
+| `--all-types` | Removes the natural-disaster-only filter. All DR incident types are included in both the approvals and denials datasets, keeping the comparison apples-to-apples. |
+
+Flags can be combined. Output chart filenames are suffixed accordingly (e.g. `fema_approval_rates_gov_only.png`).
+
 ---
 
 

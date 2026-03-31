@@ -21,6 +21,7 @@ METHODOLOGY (from the article):
   - Each unique disaster request (by state) counted once
 """
 
+import argparse
 import json
 import urllib.request
 import urllib.parse
@@ -535,20 +536,41 @@ STATE_PARTY_DATA = {
 }
 
 
-def get_state_alignment(state, date_str):
+def get_state_alignment(state, date_str, governor_only=False, two_thirds=False):
     """
-    Returns 'D', 'R', or 'Mixed' based on whether the state has a trifecta
-    of governor + both senators from the same party.
+    Returns 'D', 'R', or 'Mixed' based on state partisan control.
+
+    Default: trifecta — governor + both senators must all belong to the same party.
+    governor_only=True: classify by governor's party alone.
+    two_thirds=True: classify as D/R if at least 2 of the 3 offices (governor +
+      both senators) belong to that party.
     """
     dt = _parse_dt(date_str)
     year = dt.year
     key = (state, year)
-    
+
     if key not in STATE_PARTY_DATA:
         return None  # Unknown
-    
+
     gov, sen1, sen2 = STATE_PARTY_DATA[key]
-    
+
+    if governor_only:
+        if gov == "D":
+            return "D"
+        elif gov == "R":
+            return "R"
+        else:
+            return "Mixed"
+
+    if two_thirds:
+        offices = [gov, sen1, sen2]
+        if offices.count("D") >= 2:
+            return "D"
+        elif offices.count("R") >= 2:
+            return "R"
+        else:
+            return "Mixed"
+
     if gov == "D" and sen1 == "D" and sen2 == "D":
         return "D"
     elif gov == "R" and sen1 == "R" and sen2 == "R":
@@ -612,14 +634,18 @@ def fetch_all_pages(fetch_func, entity_key):
 # PART 3: ANALYSIS
 # ============================================================================
 
-def analyze(approved_records, denied_records):
+def analyze(approved_records, denied_records, all_types=False, governor_only=False,
+            two_thirds=False):
     """
     Compute approval rates by president and state party alignment.
-    
+
     approved_records: list of dicts from DisasterDeclarationsSummaries
     denied_records: list of dicts from DeclarationDenials
+    all_types: if True, skip incident-type filtering (include all DR requests)
+    governor_only: if True, classify states by governor party alone (not trifecta)
+    two_thirds: if True, classify as D/R when 2 of 3 offices match
     """
-    
+
     # Deduplicate approved declarations by (disasterNumber, state)
     # The raw data has one row per county
     seen_approved = set()
@@ -629,8 +655,8 @@ def analyze(approved_records, denied_records):
         if key not in seen_approved:
             seen_approved.add(key)
             approvals.append(rec)
-    
-    # Filter: natural disasters only.
+
+    # Filter: natural disasters only (skipped when --all-types is set).
     # The two APIs use different terminology for the same concepts:
     #   Approval incidentType      → Denial requestedIncidentTypes
     #   "Biological"               → (no equivalent term in denial API)
@@ -638,14 +664,15 @@ def analyze(approved_records, denied_records):
     #   "Chemical"                 → "Toxic Substances"
     #   "Other"                    → "Other"
     # "Toxic Substances" also appears in approvals and should be excluded there too.
-    EXCLUDE_APPROVAL_TYPES = {"Biological", "Terrorist", "Chemical", "Other",
-                               "Toxic Substances"}
-    EXCLUDE_DENIAL_TYPES   = {"Other", "Human Cause", "Toxic Substances"}
+    if not all_types:
+        EXCLUDE_APPROVAL_TYPES = {"Biological", "Terrorist", "Chemical", "Other",
+                                   "Toxic Substances"}
+        EXCLUDE_DENIAL_TYPES   = {"Other", "Human Cause", "Toxic Substances"}
 
-    approvals      = [r for r in approvals
-                      if r.get("incidentType") not in EXCLUDE_APPROVAL_TYPES]
-    denied_records = [r for r in denied_records
-                      if r.get("requestedIncidentTypes") not in EXCLUDE_DENIAL_TYPES]
+        approvals      = [r for r in approvals
+                          if r.get("incidentType") not in EXCLUDE_APPROVAL_TYPES]
+        denied_records = [r for r in denied_records
+                          if r.get("requestedIncidentTypes") not in EXCLUDE_DENIAL_TYPES]
     
     # Build counts: president -> alignment -> approved count
     counts = defaultdict(lambda: defaultdict(lambda: {"approved": 0, "denied": 0}))
@@ -662,7 +689,8 @@ def analyze(approved_records, denied_records):
         date  = rec["declarationDate"]
         state = rec["state"]
         pres      = get_president(date)
-        alignment = get_state_alignment(state, date)
+        alignment = get_state_alignment(state, date, governor_only=governor_only,
+                                        two_thirds=two_thirds)
 
         if pres and alignment in ("D", "R"):
             counts[pres][alignment]["approved"] += 1
@@ -709,7 +737,8 @@ def analyze(approved_records, denied_records):
             continue
 
         pres      = get_president(date)
-        alignment = get_state_alignment(state, date)
+        alignment = get_state_alignment(state, date, governor_only=governor_only,
+                                        two_thirds=two_thirds)
 
         if pres and alignment in ("D", "R"):
             counts[pres][alignment]["denied"] += 1
@@ -806,7 +835,8 @@ def analyze(approved_records, denied_records):
 # PART 4: CHART GENERATION
 # ============================================================================
 
-def plot_chart(counts, output_path="fema_approval_rates.png"):
+def plot_chart(counts, output_path="fema_approval_rates.png",
+               governor_only=False, two_thirds=False):
     """
     Generate the two-line chart replicating the Politico visualization.
     Requires matplotlib (pip install matplotlib).
@@ -885,22 +915,57 @@ def plot_chart(counts, output_path="fema_approval_rates.png"):
     ax.spines["bottom"].set_color("#bbbbbb")
 
     # ── Title block (placed above axes in figure coordinates) ──────────────
+    if governor_only:
+        subtitle = (
+            "Presidential approval rates for disaster requests from states with "
+            "Democratic vs. Republican governors"
+        )
+    elif two_thirds:
+        subtitle = (
+            "Presidential approval rates for disaster requests from states where "
+            "2 of 3 offices (governor + senators) belong to the same party"
+        )
+    else:
+        subtitle = (
+            "Presidential approval rates for disaster requests from Democratic-led "
+            "states and Republican-led states"
+        )
+    if governor_only:
+        main_title = (
+            "Partisan gap in disaster approvals narrows when classified by governor alone"
+        )
+    else:
+        main_title = (
+            "Trump has denied most disaster requests from Democratic-led states"
+        )
     fig.text(
         0.065, 0.97,
-        "Trump has denied most disaster requests from Democratic-led states",
+        main_title,
         fontsize=13, fontweight="bold", va="top", ha="left", color="#111111",
     )
     fig.text(
         0.065, 0.90,
-        ("Presidential approval rates for disaster requests from Democratic-led "
-         "states and Republican-led states"),
+        subtitle,
         fontsize=9.5, va="top", ha="left", color="#555555",
     )
 
     # ── Footer ─────────────────────────────────────────────────────────────
+    if governor_only:
+        classification_note = (
+            "Note: States classified by the party of the governor at time of request."
+        )
+    elif two_thirds:
+        classification_note = (
+            "Note: States classified by party when at least 2 of 3 offices "
+            "(governor + both senators) belong to the same party at time of request."
+        )
+    else:
+        classification_note = (
+            "Note: States classified by party when governor and senators at time of "
+            "request all belong to the same party."
+        )
     footer = (
-        "Note: States classified by party when governor and senators at time of "
-        "request all belong to the same party.\n"
+        classification_note + "\n"
         "Source: Independent replication using FEMA Disaster Declarations Summaries "
         "and Declaration Denials APIs. "
         "Inspired by POLITICO/E&E News reporting (Thomas Frank)."
@@ -920,29 +985,77 @@ def plot_chart(counts, output_path="fema_approval_rates.png"):
 # ============================================================================
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="FEMA disaster declaration partisan approval rate analysis."
+    )
+    parser.add_argument(
+        "--all-types",
+        action="store_true",
+        help=(
+            "Include all incident types (default: natural disasters only). "
+            "Applies the same filter to both approvals and denials so the "
+            "comparison remains apples-to-apples."
+        ),
+    )
+    parser.add_argument(
+        "--governor-only",
+        action="store_true",
+        help=(
+            "Classify states by governor's party alone (default: trifecta — "
+            "governor + both senators must all match). With this flag a state "
+            "is D if the governor is Democrat, R if Republican, Mixed if Independent."
+        ),
+    )
+    parser.add_argument(
+        "--two-thirds",
+        action="store_true",
+        help=(
+            "Classify a state as D/R when at least 2 of the 3 offices "
+            "(governor + both senators) belong to that party."
+        ),
+    )
+    args = parser.parse_args()
+
     print("FEMA Disaster Declarations Partisan Analysis - Replication Script")
     print("=" * 70)
-    
+    if args.all_types:
+        print("Mode: ALL incident types (no type filtering)")
+    else:
+        print("Mode: Natural disasters only (default)")
+    if args.governor_only:
+        print("Classification: Governor party only")
+    elif args.two_thirds:
+        print("Classification: Two-thirds (2 of 3 offices must match)")
+    else:
+        print("Classification: Trifecta (governor + both senators)")
+
     # NOTE: This script is designed to run against the live FEMA API.
     # If the API is unavailable, we demonstrate with the methodology.
-    
+
     try:
         print("\nAttempting to fetch approved declarations from FEMA API...")
         approved = fetch_all_pages(
-            fetch_declarations_page, 
+            fetch_declarations_page,
             "DisasterDeclarationsSummaries"
         )
         print(f"Fetched {len(approved)} approved declaration records")
-        
+
         print("\nAttempting to fetch denied declarations from FEMA API...")
         denied = fetch_all_pages(
             fetch_denials_page,
-            "DeclarationDenials" 
+            "DeclarationDenials"
         )
         print(f"Fetched {len(denied)} denial records")
-        
-        results = analyze(approved, denied)
-        plot_chart(results, output_path="fema_approval_rates.png")
+
+        results = analyze(approved, denied, all_types=args.all_types,
+                          governor_only=args.governor_only,
+                          two_thirds=args.two_thirds)
+        suffix = "_all_types" if args.all_types else ""
+        suffix += "_gov_only" if args.governor_only else ""
+        suffix += "_two_thirds" if args.two_thirds else ""
+        output = f"fema_approval_rates{suffix}.png"
+        plot_chart(results, output_path=output,
+                   governor_only=args.governor_only, two_thirds=args.two_thirds)
 
     except Exception as e:
         print(f"\nAPI fetch failed: {e}")

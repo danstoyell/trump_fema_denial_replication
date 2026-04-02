@@ -340,8 +340,8 @@ STATE_PARTY_DATA = {
     **{("GA", y): ("D", "D", "D") for y in range(1981, 1999)},  # Harris/Miller(D) + Nunn/Fowler/Cleland(D)
     
     # VIRGINIA
-    **{("VA", y): ("R", "D", "D") for y in range(2026, 2027)},  # Youngkin(R)/Warner(D)/Kaine(D) -> Mixed  
-    **{("VA", y): ("R", "D", "D") for y in range(2022, 2026)},  # Youngkin(R)/Warner(D)/Kaine(D) -> Mixed
+    **{("VA", y): ("D", "D", "D") for y in range(2025, 2027)},  # Spanberger(D)/Warner(D)/Kaine(D) — Spanberger took office Jan 17 2025, before Trump 2 inauguration
+    **{("VA", y): ("R", "D", "D") for y in range(2022, 2025)},  # Youngkin(R)/Warner(D)/Kaine(D) -> Mixed
     **{("VA", y): ("D", "D", "D") for y in range(2018, 2022)},  # Northam(D)/Warner(D)/Kaine(D)
     **{("VA", y): ("D", "D", "D") for y in range(2014, 2018)},  # McAuliffe/Northam(D)/Warner(D)/Kaine(D)
     **{("VA", y): ("R", "D", "D") for y in range(2010, 2014)},  # McDonnell(R)/Warner(D)/Webb->Kaine(D) -> Mixed

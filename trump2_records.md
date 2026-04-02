@@ -8,9 +8,9 @@ Independent analysis of all approved and denied Major Disaster (DR) requests sin
 
 | Alignment | Approved | Denied | Total | Approval Rate |
 |---|---|---|---|---|
-| Democratic trifecta | 4 | 9 | 13 | 30.8% |
+| Democratic trifecta | 5 | 9 | 14 | 35.7% |
 | Republican trifecta | 27 | 9 | 36 | 75.0% |
-| Mixed (excluded from main analysis) | 10 | 3 | 13 | 76.9% |
+| Mixed (excluded from main analysis) | 9 | 3 | 12 | 75.0% |
 | Territory / Unknown | 0 | 0 | 0 | — |
 
 ---
@@ -18,12 +18,13 @@ Independent analysis of all approved and denied Major Disaster (DR) requests sin
 ## Democratic-Trifecta States
 *Governor + both senators are Democrats*
 
-**4 approved · 9 denied · 13 total · 30.8% approval rate**
+**5 approved · 9 denied · 14 total · 35.7% approval rate**
 
-### Approved (4)
+### Approved (5)
 
 | Date | State | Title | Incident Type | Incident Begin | Programs |
 |---|---|---|---|---|---|
+| 2025-04-04 | VA | SEVERE WINTER STORMS AND FLOODING | Severe Storm | 2025-02-10 | PA |
 | 2025-07-22 | NM | SEVERE STORMS, FLOODING, AND LANDSLIDES | Flood | 2025-06-23 | IH, PA |
 | 2025-07-22 | MI | SEVERE WINTER STORM | Severe Ice Storm | 2025-03-28 | PA |
 | 2025-07-22 | OR | SEVERE STORMS, FLOODING, LANDSLIDES, AND MUDSLIDES | Severe Storm | 2025-03-13 | PA |
@@ -101,14 +102,13 @@ Independent analysis of all approved and denied Major Disaster (DR) requests sin
 ## Mixed-Alignment States
 *Split partisan control — excluded from D/R comparison*
 
-**10 approved · 3 denied · 13 total · 76.9% approval rate**
+**9 approved · 3 denied · 12 total · 75.0% approval rate**
 
-### Approved (10)
+### Approved (9)
 
 | Date | State | Title | Incident Type | Incident Begin | Programs |
 |---|---|---|---|---|---|
 | 2025-02-24 | KY | SEVERE STORMS, STRAIGHT-LINE WINDS, FLOODING, LANDSLIDES, AND MUDSLIDES | Severe Storm | 2025-02-14 | PA, HM |
-| 2025-04-04 | VA | SEVERE WINTER STORMS AND FLOODING | Severe Storm | 2025-02-10 | PA |
 | 2025-04-24 | KY | SEVERE STORMS, STRAIGHT-LINE WINDS, TORNADOES, FLOODING, LANDSLIDES, AND MUDSLIDES | Severe Storm | 2025-04-02 | IH, PA |
 | 2025-05-21 | KS | SEVERE WINTER STORM, STRAIGHT-LINE WINDS, FLOODING, AND WILDFIRES | Severe Storm | 2025-03-14 | PA |
 | 2025-05-23 | KY | SEVERE STORMS, STRAIGHT-LINE WINDS, AND TORNADOES | Severe Storm | 2025-05-16 | PA |
@@ -135,4 +135,4 @@ Independent analysis of all approved and denied Major Disaster (DR) requests sin
 
 ---
 
-*Source: FEMA Disaster Declarations Summaries API (v2) and Declaration Denials API (v1). State party classifications from independent research covering all 50 states, 1981–2026.*
+*Source: FEMA v2/DisasterDeclarationsSummaries (approvals) and v1/DeclarationDenials (denials). State party classifications from independent research covering all 50 states, 1981–2026.*

@@ -179,9 +179,9 @@ def plot(state_counts, fema_web=False):
     # clip outside the axes.
     # Per-state overrides (dx, dy in points) for crowded areas.
     LABEL_OFFSET_PTS = {
-        # y=0% cluster (denied all): push below
-        "AZ": (0, -10), "CA": (0, -10), "HI": (0, -10),
-        "IL": (0, -10), "VT": (0, -10),
+        # y=0% cluster (denied all): push above (below clips outside ylim=0)
+        "AZ": (0, 9), "CA": (0, 9), "HI": (0, 9),
+        "IL": (0, 9), "VT": (0, 9),
         # y=100% cluster (approved all): push above
         "AR": (0,  9), "GA": ( 14,  0), "IA": (  0,  9),
         "IN": (0,  9), "LA": ( 14,  0), "MI": (-14,  0),

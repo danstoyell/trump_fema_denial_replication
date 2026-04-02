@@ -58,7 +58,7 @@ def denial_rate(counts, president, alignment):
     return rate, total, c["approved"], c["denied"]
 
 
-def plot(counts, fema_web=False):
+def plot(counts, fema_web=False, include_emergency=True):
     try:
         import matplotlib
         matplotlib.use("Agg")
@@ -126,9 +126,10 @@ def plot(counts, fema_web=False):
     )
     approvals_src = ("v1/FemaWebDisasterDeclarations" if fema_web
                      else "v2/DisasterDeclarationsSummaries")
+    decl_scope = "DR + EM" if include_emergency else "DR only"
     fig.text(
         0.5, 0.90,
-        f"By state party leaning (two-thirds rule) · All declaration types (DR + EM) · All incident types · {approvals_src}",
+        f"By state party leaning (two-thirds rule) · {decl_scope} · All incident types · {approvals_src}",
         fontsize=8.5, ha="center", va="top", color="#555555",
     )
     fig.text(
@@ -155,6 +156,12 @@ if __name__ == "__main__":
         help="Use v1/FemaWebDisasterDeclarations (disaster-level) instead of "
              "v2/DisasterDeclarationsSummaries (county-level) for approvals.",
     )
+    parser.add_argument(
+        "--include-emergency",
+        action="store_true",
+        help="Include Emergency (EM) declarations in addition to Major Disasters (DR). "
+             "Default: DR only.",
+    )
     args = parser.parse_args()
 
     approved, denied = fetch_data(fema_web=args.fema_web)
@@ -164,7 +171,7 @@ if __name__ == "__main__":
         denied,
         all_types=True,
         two_thirds=True,
-        include_emergency=True,
+        include_emergency=args.include_emergency,
     )
 
     print("\nResults:")
@@ -174,4 +181,4 @@ if __name__ == "__main__":
             label = "Dem" if alignment == "D" else "Rep"
             print(f"  {pres:8} {label}: {rate:.1f}% denial (n={total}, {app} approved, {den} denied)")
 
-    plot(counts, fema_web=args.fema_web)
+    plot(counts, fema_web=args.fema_web, include_emergency=args.include_emergency)

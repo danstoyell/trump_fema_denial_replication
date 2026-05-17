@@ -10,11 +10,18 @@ Independent replication of the POLITICO/E&E News analysis (Thomas Frank) showing
 |---|---|
 | `replicate_fema_analysis.py` | Main analysis — fetches all FEMA data, computes approval rates by president and state party, outputs a line chart |
 | `export_trump2_records.py` | Exports all Trump 2nd term approved/denied records as a human-readable Markdown file |
+| `export_csv.py` | Row-level CSV of every approved/denied record with all classification columns (`fema_all_records.csv`) |
 | `biden_vs_trump2_chart.py` | Bar chart comparing Biden vs Trump 2nd term denial rates by state party |
+| `trump_combined_denial_chart.py` | Trump 1+2 combined denial rates under three classification methods (election / governor / trifecta) |
 | `trump2_sensitivity_chart.py` | Grouped bar chart showing Trump 2nd term denial rates across all 12 methodology combinations |
 | `trump2_scatter.py` | Scatterplot of state-level FEMA approval rate vs 2024 Trump vote share |
+| `request_behavior_analysis.py` | 4-panel chart testing whether the partisan gap reflects request behavior (volume, scope, incident mix) or decisionmaker behavior |
 
 All scripts support `--fema-web` (see below). Run any script with `--help` for full flag documentation.
+
+### Pending-as-denial augmentation
+
+`replicate_fema_analysis.py` and `request_behavior_analysis.py` both accept `--include-pending <CSV>` (with optional `--pending-threshold-days N`, default 30). OpenFEMA only publishes requests after they're decided, so requests stuck in "Pending" status are invisible to the canonical pipeline. Pass a Disaster Tracker spreadsheet and any pending request older than the threshold is counted as a de-facto denial in the most recent president's column; the line chart marks the resulting drop with a hollow ghost marker.
 
 ---
 

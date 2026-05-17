@@ -60,23 +60,16 @@ TRUMP2_START = "2025-01-20"
 
 def fetch_data(fema_web=False):
     if fema_web:
-        print("Fetching DR+EM approvals from FemaWeb endpoint...")
-        approved = fetch_all_fema_web(include_emergency=True)
+        print("Fetching DR approvals from FemaWeb endpoint...")
+        approved = fetch_all_fema_web(include_emergency=False)
         print(f"  {len(approved)} rows")
     else:
         print("Fetching DR approvals...")
-        dr = fetch_all_pages(
+        approved = fetch_all_pages(
             lambda skip: fetch_declarations_page(skip, declaration_type="DR"),
             "DisasterDeclarationsSummaries",
         )
-        print(f"  {len(dr)} rows")
-        print("Fetching EM approvals...")
-        em = fetch_all_pages(
-            lambda skip: fetch_declarations_page(skip, declaration_type="EM"),
-            "DisasterDeclarationsSummaries",
-        )
-        print(f"  {len(em)} rows")
-        approved = dr + em
+        print(f"  {len(approved)} rows")
     print("Fetching denials...")
     denied = fetch_all_pages(fetch_denials_page, "DeclarationDenials")
     print(f"  {len(denied)} rows")

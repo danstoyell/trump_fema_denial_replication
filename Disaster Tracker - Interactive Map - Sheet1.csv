@@ -1,0 +1,493 @@
+State/Tribe,Type of Extreme Weather,Incident Period Start,Incident Period End,Major Disaster Declaration Request,Major Disaster Declaration Decision,Decision Details,Decision Date,Waiting Period,Summary,Lat,Long,ID
+Nebraska,Wildfires,3/12/2026,4/2/2026,5/8/2026,Pending,,,7 days and counting,"On 5/8, Nebraska Gov. Jim Pillen (R) requested Public Assistance for 5 counties and statewide Hazard Mitigation.",41.54792279,-102.3286803,1
+Mashpee Wampanoag Tribe,Severe Winter Storm and Snowstorm,2/22/2026,2/23/2026,4/22/2026,Pending,,,21 days and counting,"On 4/22, the Mashpee Wampanoag Tribe requested Public Assistance and Hazard Mitigation grants for all of its tribal land.",41.6096891,-70.48463401,2
+Native Village of Ambler,Severe Winter Storm,2/19/2026,3/14/2026,4/16/2026,Pending,,,27 days and counting,"On 4/16, the Native Village of Ambler requested Individual Assistance, Public Assistance, and Hazard Mitigation grants for all of its tribal land.",67.08777526,-157.856089,3
+Idaho,"Severe Storms, Straight-line Winds, Flooding,
+Landslides, and Mudslides",3/11/2026,3/15/2026,4/14/2026,Pending,,,29 days and counting,"On 4/14, Idaho Gov. Brad Little (R) requested Public Assistance for 6 counties and statewide Hazard Mitigation.",47.67323602,-116.8119314,4
+Massachusetts,Severe Winter Storm and Snowstorm,2/22/2026,2/23/2026,4/7/2026,Pending,,,36 days and counting,"On 4/7, Massachusetts Gov. Maura Healy (D) requested Public Assistance for 6 counties and statewide Hazard Mitigation.",41.91148004,-71.13183434,5
+Rhode Island,Severe Winter Storm and Snowstorm,2/22/2026,2/23/2026,4/7/2026,Pending,,,36 days and counting,"On 4/7, Rhode Island Gov. Dan McKee (D) requested Public Assistance for 5 counties and statewide Hazard Mitigation.",41.82594556,-71.41793128,6
+New Jersey,Severe Winter Storm,2/22/2026,2/23/2026,4/7/2026,Pending,,,36 days and counting,"On 4/7, New Jersey Gov. Mikie Sherrill (D) requested Public Assistance for 19 counties and statewide Hazard Mitigation.",39.35630048,-74.44951054,7
+Michigan,Severe Storm and Tornadoes,3/6/2026,3/6/2026,4/1/2026,Pending,,,42 days and counting,"On 4/1, Michigan Gov. Gretchen Whitmer (D) requested Inidividual Assistance for 3 counties and statewide Hazard Mitigation.",42.06654323,-85.13455671,8
+New York,Severe Winter Storm,2/22/2026,2/23/2026,3/25/2026,Pending,,,49 days and counting,"On 3/25, New York Gov. Kathy Hochul (D) requested Public Assistance for 3 counties and statewide Hazard Mitigation.",40.84482554,-73.87427101,9
+Delaware,Severe Winter Storm,2/22/2026,2/23/2026,3/23/2026,Pending,,,51 days and counting,"On 3/23, Delaware Gov. Matt Meyer (D) requested Public Assistance for 3 counties and statewide Hazard Mitigation.",39.1647833,-75.53112087,10
+Chickasaw Nation,Severe Winter Storm,1/23/2026,1/24/2026,3/18/2026,Pending,,,56 days and counting,"On 3/18, the Chickasaw Nation requested Public Assistance and Hazard Mitigation grants for its reservation.",34.49832018,-97.23037877,11
+Georgia,Severe Winter Storm,1/22/2026,1/27/2026,3/12/2026,Pending,,,62 days and counting,"On 3/12, Georgia Gov. Brian Kemp (R) requested Public Assistance for 8 counties and statewide Hazard Mitigation. ",34.51235714,-83.5290836,12
+Fort Belknap Indian Community,Severe Storms and Straight-line Winds,12/17/2025,12/18/2025,2/13/2026,Pending,,,89 days and counting,"On 2/13, the Fort Belknap Indian Community requested Individual Assistance and Hazard Mitigation grants for its reservation.",48.48323277,-108.7575722,13
+Crow Tribe of Montana,Straight-line Winds,12/17/2025,12/20/2025,2/12/2026,Pending,,,90 days and counting,"On 2/12, the Crow Tribe of Montana requested Individual Assistance and Hazard Mitigation grants for its reservation.",45.40865212,-107.6906868,14
+Fort Peck Assiniboine & Sioux Tribes,Severe Storms and Straight-line Winds,12/17/2025,12/18/2025,2/11/2026,Pending,,,91 days and counting,"On 2/11, the Fort Peck Assiniboine & Sioux Tribes requested Individual Assistance and Hazard Mitigation grants for the Fort Peck Reservation.",48.25404938,-104.5640186,15
+Kentucky,Severe Winter Storm,1/23/2026,2/2/2026,2/5/2026,Pending,,,97 days and counting,"On 2/5, Kentucky Gov. Andy Beshear (D) requested Public Assistance for 18 counties and statewide Hazard Mitigation.",36.75459196,-86.18778699,16
+Native Village of Kipnuk,"Severe Storms, Flooding, and Remnants of Typhoon Halong",10/8/2025,10/13/2025,1/11/2026,Pending,,,122 days and counting,"On 1/11, the Native Village of Kipnuk requested Public Assistance and Hazard Mitigation grants for its reservation.",59.93589608,-164.0385282,17
+San Carlos Apache Tribe,Severe Storms and Flooding,10/10/2025,10/14/2025,12/15/2025,Pending,,,149 days and counting,"On 12/15, the San Carlos Apache Tribe requested Individual Assistance, Public Assistance, and Hazard Mitigation grants for its reservation.",33.35453838,-110.4526588,18
+San Carlos Apache Tribe,Severe Storms and Flooding,9/25/2025,9/27/2025,11/26/2025,Pending,,,168 days and counting,"On 11/26, the San Carlos Apache Tribe requested Individual Assistance, Public Assistance, and Hazard Mitigation grants for its reservation.",33.47887327,-110.2441788,19
+Pueblo of Acoma,Severe Storms and Flooding,9/28/2025,9/29/2025,10/22/2025,Rejected (appeal pending),,2/7/2026,108 days (203 days and counting),"On 10/22, the Pueblo of Acoma requested Individual Assistance, Public Assistance, and Hazard Mitigation grants for all of its tribal land.
+
+On 2/7/26, FEMA rejected the tribe's request.
+
+On 4/23, the tribal government submitted an appeal.",34.8968996,-107.5794762,20
+Arizona,Severe Storms and Flooding,9/25/2025,9/27/2025,10/24/2025,Rejected (appeal pending),"According to the office of Arizona Gov. Katie Hobbs (D), ""Preliminary damage assessments documented more than $30 million in damages, far exceeding the thresholds historically used to justify federal disaster assistance."" ($13.87 million in FY2026)",12/20/2025,57 days (201 days and counting),"On 10/24, Arizona Gov. Katie Hobbs (D) requested Public Assistance (categories A-G) for 2 counties and statewide Hazard Mitigation.
+
+On 12/20, FEMA rejected Hobbs' request, eliciting criticism from Hobbs and others.
+
+On 1/16/26, Hobbs submitted an appeal.",33.40431174,-110.8761372,21
+Commonwealth of Northern Mariana Islands,Typhoon Sinlaku,4/11/2026,4/17/2026,4/19/2026,Approved (partial),Certain types of aid in limbo,4/23/2026,4 days,"On 4/19, Northern Mariana Islands Gov. David Apatang (I) requested an expedited major disaster declaration, including Individual Assistance, Public Assistance, and Hazard Mitigation grants throughout the commonwealth.
+
+On 4/23, FEMA authorized Individual Assistance and Public Assistance for the commonwealth.
+
+No decision about Hazard Mitigation grants has been announced.",15.18476251,145.7464641,22
+Colorado,"Lee and Elk Fires, Flooding, and Mudslides",8/2/2025,8/29/2025,9/26/2025,Rejected,"According to the office of Colorado Gov. Jared Polis (D), the $27.5 million and counting in damages ""exceeded FEMA's threshold to approve a federal disaster declaration."" ($10.91 million in FY2025)","4/10/2026
+(appeal)
+
+12/20/2025
+(original)",196 days (from original request to appeal denial),"On 9/26, Colorado Gov. Jared Polis (D requested Public Assistance (categories A, C, D, F, and G) for Rio Blanco County and statewide Hazard Mitigation.
+
+On 12/20, FEMA rejected Polis' request, eliciting criticism from the governor and others.
+
+On 1/16/26, Polis submitted an appeal.
+
+On 4/13, FEMA rejected Polis' appeal, eliciting criticism from the governor.",40.12288379,-107.9251593,23
+Colorado,"Severe Storms, Flooding, Landslides, and Mudslides",10/10/2025,10/14/2025,11/12/2025,Rejected,"According to the office of Colorado Gov. Jared Polis (D), the $13 million and counting in damages ""exceeded FEMA's threshold to approve a federal disaster declaration."" ($11.20 million in FY2026)","4/10/2026
+(appeal)
+
+12/20/2025
+(original)",149 days (from original request to appeal denial),"On 11/12, Colorado Gov. Jared Polis (D) requested Public Assistance (categories A, B, C, D, F, and G) for 3 counties and statewide Hazard Mitigation.
+
+On 12/20, FEMA rejected Polis' request, eliciting criticism from Polis and others.
+
+On 1/16/26, Polis submitted an appeal.
+
+On 4/13, FEMA rejected Polis' appeal, eliciting criticism from the governor.",37.22577791,-107.5974556,24
+Hawaii          ,"Severe Storms, Flooding, Landslides, and Mudslides",3/10/2026,3/24/2026,3/23/2026,Approved (partial),Certain jurisdictions excluded and types of aid denied,4/7/2026,15 days,"On 3/23, Hawaii Gov. Josh Green (D) requested Individual Assistance and Public Assistance (categories A-G) for 4 counties and statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Individual Assistance and Public Assistance (categories A-F) for 3 counties.
+
+Kauai County appears to have been excluded from Individual Assistance and Public Assistance.
+
+Public Assistance (category G - Parks, Recreational, and Other Facilities) appears to have been denied.
+
+No decision about Hazard Mitigation grants has been announced.",21.56188015,-158.0692477,25
+South Carolina,Severe Winter Storm,1/21/2026,1/27/2026,2/24/2026,Approved (partial),Certain types of aid in limbo,4/7/2026,42 days,"On 2/24, South Carolina Gov. Henry McMaster (R) requested Public Assistance for 3 counties and statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance (categories A-G) for 3 counties.
+
+No decision about Hazard Mitigation grants has been announced.",34.84867291,-82.39684532,26
+Oregon,"Severe Storms and Winds, Flooding, Landslides, and Mudslides",12/15/2025,12/21/2025,2/18/2026,Approved (partial),Certain jurisdictions excluded and types of aid in limbo,4/7/2026,48 days,"On 2/18, Oregon Gov. Tina Kotek (D) requested Public Assistance for 9 counties and statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance for 4 counties (Clackamas, Hood River, Lincoln, and Linn). Clackamas and Hood River counties are eligible for category A (debris removal), Clackamas County is elgible for category B (emergency protective measures), and Linn County is elgible for category C (roads and bridges).
+
+Lane, Polk, Tillamook, Union, and Yamhill counties appear to have benn excluded from Public Assistance.
+
+No decision about Hazard Mitigation grants has been announced.",45.40814253,-122.572703,27
+Idaho,Straight-line Winds,12/16/2025,12/18/2025,2/6/2026,Approved (partial),Certain types of aid in limbo,4/7/2026,60 days,"On 2/6, Idaho Gov. Brad Little (R) requested Public Assistance for 10 counties and statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance (categories A-G) for 10 counties.
+
+No decision about Hazard Mitigation grants has been announced.",46.7321051,-116.9977459,28
+Alaska,Severe Storms and Straight-line Winds,12/6/2025,12/9/2025,1/30/2026,Approved (partial),Certain types of aid in limbo,4/7/2026,67 days,"On 1/30, Alaska Gov. Mike Dunleavy (R) requested Public Assistance for Matanuska-Susitna Borough, along with statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance (categories A-G) for Matanuska-Susitna Borough.
+
+No decision about Hazard Mitigation grants has been announced.",61.59990728,-149.113353,29
+South Dakota,Straight-line Winds,12/17/2025,12/18/2025,1/27/2026,Approved (partial),Certain types of aid in limbo,4/7/2026,70 days,"On 1/27, South Dakota Gov. Larry Rhoden (R) requested Public Assistance for 3 counties and statewide Hazard Mitigation. 
+
+On 4/7, FEMA authorized Public Assistance (categories A-G) for 3 counties.
+
+No decision about Hazard Mitigation grants has been announced.",44.06296952,-103.1392021,30
+Washington,"Severe Storms, Straight-line Winds, Landslides, and Mudslides",12/5/2025,12/22/2025,"1/21/2026 (Individual Assistance)
+
+2/17/2026 (Public Assistance)",Approved (partial),Certain jurisdictions excluded and types of aid denied,4/7/2026,"76 days (Individual Assistance)
+
+49 days (Public Assistance)","On 1/21, Washington Gov. Bob Ferguson (D) requested Individual Assistance for 10 counties and 16 tribes.
+
+On 4/7, FEMA authorized Individual Assistance for 25 counties and tribes.
+
+The Snoqualmie Indian Tribe appears to have benn excluded from Individual Assistance.
+
+On 2/17, Washington Gov. Bob Ferguson (D) requested Public Assistance for 23 counties and 24 tribes along with statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance for 44 counties and tribes (categories A, C, D, E, and F - 42 jurisdictions; category B - 41 jurisdictions; and category G - 25 jurisdictions). 
+
+The Confederated Tribes and Bands of the Yakama Nation, the Cowlitz Indian Tribe, and the Snoqualmie Indian Tribe appear to have benn excluded from Public Assistance.
+
+On 4/23, FEMA denied Hazard Mitigation grants.",48.00706013,-121.958091,31
+Montana,Severe Winter Storms and Straight-line Winds,12/16/2025,12/18/2025,1/15/2026,Approved (partial),Certain types of aid in limbo,4/7/2026,82 days,"On 1/15, Montana Gov. Greg Gianforte (R) requested Public Assistance for 28 counties and 5 tribes, as well as statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance (categories A-G) for 28 counties and 5 tribes.
+
+No decision about Hazard Mitigation grants has been announced.",46.75752937,-114.0798099,32
+Montana,Severe Storms and Flooding,12/9/2025,12/14/2025,1/10/2026,Approved (partial),Certain types of aid in limbo,4/7/2026,87 days,"On 1/10, Montana Gov. Greg Gianforte (R) requested Public Assistance for Lincoln County and statewide Hazard Mitigation.
+
+On 4/7, FEMA authorized Public Assistance (categories A-G) for Lincoln County.
+
+No decision about Hazard Mitigation grants has been announced.",48.38829085,-115.5562109,33
+Illinois,Severe Storms and Flooding,7/25/2025,7/28/2025,8/21/2025,Rejected,"Since FEMA began publishing damage assessments in 2007 and calculating damage-to-wealth ratios in 2019, presidents had approved requests for individual assistance every time the ratio exceeded 12.5, according to E&E News. However, Trump rejected Illinois Gov. JB Pritzker's (D) request even though the ratio was 39.45.","4/10/2026 (appeal)
+
+10/22/2025 (original)",232 days (from original request to appeal denial),"On 8/21, Illinois Gov. J.B. Pritzker (D) requested Individual Assistance for 3 counties and statewide Hazard Mitigation.
+
+On 10/22, FEMA rejected Pritzker's request.
+
+On 11/21, Pritzker submitted an appeal.
+
+On 4/7/26, FEMA rejected Pritzker's appeal.",41.80247585,-87.72632165,34
+Louisiana,Severe Winter Storm,1/23/2026,1/27/2026,2/5/2026,Approved (partial),Certain types of aid in limbo,2/18/2026,13 days,"On 2/5, Louisiana Gov. Jeff Landry (R) requested an expedited major disaster declaration, including Public Assistance and Hazard Mitigation grants for 9 parishes.
+
+On 2/18, FEMA authorized Public Assistance (categories A and B) for 9 parishes.
+
+On 3/4, FEMA authorized Public Assistance (categories C-G) for 8 parishes.
+
+On 3/16, FEMA authorized Public Assistance (categories A and B) for 8 additional parishes.
+
+On 3/16, FEMA authorized Public Assistance (categories C-G) for 5 additional parishes.
+
+On 4/7, FEMA authorized Public Assistance (categories A and B) for 1 additional parish.
+
+No decision about Hazard Mitigation grants has been announced.",32.5086307,-92.12129062,35
+Arizona,"Severe Storms, Flooding, Landslides, and Mudslides",10/10/2025,10/13/2025,11/12/2025,Rejected,,2/9/2026,89 days,"On 11/12, Arizona Gov. Katie Hobbs (D) requested Individual Assistance for 2 counties.",33.42629745,-111.9409317,36
+Vermont,Severe Storms and Flooding,7/10/2025,7/10/2025,8/22/2025,Rejected,"According to the office of Vermont Gov. Phil Scott (R), ""Federal assessors identified more than $1.8 million in statewide damages, exceeding the minimum threshold for a Public Assistance disaster declaration."" ($1.22 million in FY2025)","2/7/2026 (appeal)
+
+10/22/2025 (original)",169 days (from original request to appeal denial),"On 8/22, Vermont Gov. Phil Scott (R) requested Public Assistance (categories A-G) for 2 counties and statewide Hazard Mitigation.
+
+On 10/22, FEMA rejected Scott's request.
+
+On 11/20, Scott submitted an appeal.
+
+On 2/7/26, FEMA rejected Scott's appeal.",44.63312061,-72.02811088,37
+Illinois,"Severe Storms, Straight-line Winds, and Flash Flooding",8/16/2025,8/19/2025,9/15/2025,Rejected,"Since FEMA began publishing damage assessments in 2007 and calculating damage-to-wealth ratios in 2019, presidents had approved requests for individual assistance every time the ratio exceeded 12.5, according to E&E News. However, Trump rejected Illinois Gov. JB Pritzker's (D) request even though the ratio was 71.21.","2/7/2026 (appeal)
+
+10/22/2025 (original)",145 days (from original request to appeal denial),"On 9/15, Illinois Gov. JB Pritzker (D) requested Individual Assistance for 5 counties and statewide Hazard Mitigation.
+
+On 10/22, FEMA rejected Pritzker's request.
+
+On 11/21, Pritzker submitted an appeal.
+
+On 2/7/26, FEMA rejected Pritzker's appeal.",41.64725314,-88.08930965,38
+Kansas,"Severe Storms, Straight-line Winds, and Flooding",9/8/2025,9/10/2025,11/21/2025,Rejected,,2/7/2026,78 days,"On 11/21, Kansas Gov. Laura Kelly (D) requested Public Assistance for 4 counties and statewide Hazard Mitigation.
+
+On 2/7/26, FEMA rejected Kelly's request.",39.00806284,-97.87573242,39
+Mississippi,Severe Winter Storm,1/23/2026,1/27/2026,2/3/2026,Approved (partial),Certain types of aid denied and other types of aid in limbo,2/6/2026,3 days,"On 2/3, Mississippi Gov. Tate Reeves (R) requested Individual Assistance and Public Assistance for 36 counties and the Mississippi Band of Choctaw Indians, Public Assistance for 2 counties, and statewide Hazard Mitigation.
+
+On 2/6, FEMA authorized Public Assistance for 38 counties and the Mississippi Choctaw Indian Reservation.
+
+On 3/17, FEMA authorized Public Assistance (category B - Emergency Protective Measures) for 44 additional counties.
+
+Individual Assistance appears to have been denied.
+
+No decision about Hazard Mitigation grants has been announced.",34.31135834,-89.94316642,40
+Tennessee,Severe Winter Storm,1/22/2026,,1/28/2026,Approved (partial),Certain types of aid denied and other types of aid in limbo,2/6/2026,9 days,"On 1/28, Tennessee Gov. Bill Lee (R) requested an expedited major disaster declaration, including Individual Assistance and Public Assistance for 23 counties and statewide Hazard Mitigation.
+
+On 2/6, FEMA authorized Public Assistance (categories A and C-G) for 15 counties and Public Assistance category B (Emergency Protective Measures) for 23 counties.
+
+On 3/8, FEMA authorized Public Assistance for an additional 75 counties. As a result, 40 counties are eligible for Public Assistance (categories A and C-G) and 95 counties are eligible for Public Assistance category B (Emergency Protective Measures).
+
+Individual Assistance appears to have been denied.
+
+No decision about Hazard Mitigation grants has been announced.",36.16068182,-86.7768406,41
+Rosebud Sioux Tribe,"Severe Storms, Straight-line Winds, and a Tornado ",4/27/2025,4/28/2025,6/26/2025,Rejected,,"12/20/2025 (appeal)
+
+7/22/2025 (original)",177 days (from original request to appeal denial),"On 6/26, the Rosebud Sioux tribal government requested Individual Assistance, Public Assistance, and Hazard Mitigation grants.
+
+On 7/22, FEMA rejected the tribe's request.
+
+On 9/18, the tribe submitted an appeal.
+
+On 12/22, FEMA rejected the tribe's appeal.",43.14292852,-100.9056895,42
+Oklahoma,"Severe Storms, Tornadoes, Straight-line Winds, and Flooding",4/19/2025,5/6/2025,7/2/2025,Rejected,,"12/20/2025
+
+7/22/2025 (original)",171 days (from original request to appeal denial),"On 7/2, Oklahoma Gov. Kevin Stitt (R) requested Public Assistance and Hazard Mitigation for 22 counties.
+
+On 7/22, FEMA rejected Stitt's request.
+
+On 8/19, Stitt submitted an appeal.
+
+On 12/20, FEMA rejected Stitt's appeal.",34.77278636,-96.67952306,43
+Kansas,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",7/17/2025,7/22/2025,9/17/2025,Approved (partial),Certain jurisdictions excluded and types of aid in limbo,12/19/2025,93 days,"On 9/17, Kansas Gov. Laura Kelly (D) requested Public Assistance for 16 counties and statewide Hazard Mitigation. 
+
+On 12/19, FEMA authorized Public Assistance (categories A-G) for 12 counties (Ford, Johnson, Marion, and Pawnee counties were excluded).
+
+No decision about Hazard Mitigation grants has been announced.",38.95403954,-94.73521084,44
+Maryland,Severe Storms and Flooding,5/13/2025,5/14/2025,6/11/2025,Rejected,"According to the office of Maryland Gov. Wes Moore (D), the storms caused more than $33.7 million in damages, which is ""nearly three times the state's qualifying threshold for assistance."" ($11.67 million in FY2025)","10/22/2025 (appeal)
+
+7/22/2025 (original)",133 days (from original request to appeal denial),"On 6/11, Maryland Gov. Wes Moore (D) requested Public Assistance (categories A-G) for 2 counties and Hazard Mitigation for an unspecified number of counties.
+
+On 7/22, FEMA rejected Moore's request.
+
+On 8/19, Moore submitted an appeal.
+
+On 10/22, FEMA rejected Moore's appeal, eliciting criticism from Moore and others.",39.48998451,-79.04320986,45
+Alaska,"Severe Storms, Straight-line Winds, and Remnants of Typhoon Halong",10/8/2025,10/13/2025,10/16/2025,Approved (partial),Certain types of aid in limbo,10/22/2025,6 days,"On 10/16, Alaska Gov. Mike Dunleavy (R) requested Individual Assistance and Public Assistance for 2 Regional Education Attendance Areas and 1 Borough, along with statewide Hazard Mitigation.
+
+On 10/22, FEMA authorized Individual Assistance and Public Assistance (categories A-G) for 2 Regional Educational Attendance Areas (Lower Kuskokwim and Lower Yukon) and 1 Borough (Northwest Arctic).
+
+On 2/3/26, FEMA authorized Individual Assistance and Public Assistance (categories A-G) for 2 additional Regional Educational Attendance Areas (Kashunamiut and Yupiit) and 1 City School District (St. Marys), as well as Public Assistance (categories A-G) for 4 additional Regional Educational Attendance Areas (Bering Strait, Iditarod Area, Pribilof Island, and Yukon Koyukuk).
+
+No decision about Hazard Mitigation grants has been announced.",62.77983013,-164.4201553,46
+Nebraska,"Severe Storms, Straight-line Winds, and Flash Flooding",8/8/2025,8/10/2025,9/4/2025,Approved (partial),Certain types of aid in limbo,10/22/2025,48 days,"On 9/4, Nebraska Gov. Jim Pillen (R) requested Public Assistance for 12 counties and statewide Hazard Mitigation.
+
+On 10/22, FEMA authorized Public Assistance (categories A-G) for 12 counties.
+
+No decision about Hazard Mitigation grants has been announced.",41.54490959,-96.13474554,47
+North Dakota,"Severe Storms, Straight-line Winds, and Tornadoes",8/7/2025,8/8/2025,9/4/2025,Approved (partial),Certain types of aid in limbo,10/22/2025,48 days,"On 9/4, North Dakota Gov. Kelly Armstrong (R) requested Public Assistance for 7 counties and statewide Hazard Mitigation.
+
+On 10/22, FEMA authorized Public Assistance (categories A-G) for 7 counties.
+
+No decision about Hazard Mitigation grants has been announced.",46.91067696,-98.70624026,48
+Leech Lake Band of Ojibwe,Severe Storm and Straight-line Winds,6/21/2025,6/21/2025,8/18/2025,Approved (partial),Certain types of aid in limbo,10/22/2025,65 days,"On 8/18, the Leech Lake Band of Ojibwe requested Individual Assistance, Public Assistance, and Hazard Mitigation grants for all of its tribal land.
+
+On 10/22, FEMA authorized Individual Assistance and Public Assistance (categories A-G) throughout the Leech Lake Indian Reservation.
+
+No decision about Hazard Mitigation grants has been announced.",47.32962085,-94.23584243,49
+Nebraska,Severe Storm and Straight-line Winds,6/29/2025,6/30/2025,7/23/2025,Rejected,"A joint state/FEMA preliminary damage assessment estimated $9.37 million in losses, well above Nebraska's $3.71 million threshold for FY2025. ",9/11/2025,50 days,"On 7/23, Nebraska Gov. Jim Pillen (R) requested Public Assistance for Dawson County and statewide Hazard Mitigation.
+
+On 9/11, FEMA rejected Pillen's request.",40.81815274,-99.87807559,50
+Wisconsin,"Severe Storms, Straight-line Winds, Flooding, and Mudslides",8/9/2025,8/12/2025,8/27/2025,Approved (partial),Certain types of aid denied,9/11/2025,15 days,"On 8/27, Wisconsin Gov. Tony Evers (D) requested Individual Assistance for 3 counties, Public Assistance (various categories) for 6 counties, and Hazard Mitigation for 6 counties.
+
+On 9/11, FEMA authorized Individual Assistance for 3 counties.
+
+On 10/23, FEMA denied Public Assistance.
+
+On 10/28, FEMA denied Hazard Mitigation grants.
+
+On 11/18, Evers submitted an appeal.
+
+On 2/7/26, FEMA rejected Evers' appeal even though a joint state/FEMA preliminary damage assessment validated more than $26.5 million in eligible Public Assistance disaster costs, well above Wisconsin's $11.4 million threshold for FY2026.",43.14727791,-88.03113901,51
+Kansas,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",6/3/2025,6/7/2025,8/5/2025,Approved (partial),Certain types of aid in limbo,9/11/2025,37 days,"On 8/5, Kansas Gov. Laura Kelly (D) requested Public Assistance for 16 counties and statewide Hazard Mitigation.
+
+On 9/11, FEMA authorized Public Assistance (categories A-G) for 16 counties.
+
+No decision about Hazard Mitigation grants has been announced.",37.68591524,-97.26769392,52
+North Carolina,Tropical Depression Chantal,7/6/2025,7/7/2025,8/5/2025,Approved (partial),Certain types of aid in limbo,9/11/2025,37 days,"On 8/5, North Carolina Gov. Josh Stein (D) requested Public Assistance for 7 counties and statewide Hazard Mitigation.
+
+On 9/11, FEMA authorized Public Assistance (categories A-G) for 7 counties.
+
+No decision about Hazard Mitigation grants has been announced.",36.06716844,-79.40232183,53
+Sisseton-Wahpeton Oyate Tribe,Severe Storms and Flooding,6/12/2025,6/17/2025,7/30/2025,Approved (partial),Certain types of aid in limbo,9/11/2025,43 days,"On 7/30, the Sisseton-Wahpeton Oyate tribal government requested Individual Assistance, Public Assistance, and Hazard Mitigation grants for the Lake Traverse Reservation.
+
+On 9/11, FEMA authorized Individual Assistance and Public Assistance (categories A-G) for the Lake Traverse Reservation.
+
+No decision about Hazard Mitigation grants has been announced.",45.61256716,-97.14394787,54
+North Dakota,"Severe Storms, Straight-line Winds, and Tornadoes",6/20/2025,6/21/2025,7/21/2025,Approved (partial),Certain types of aid in limbo,9/11/2025,52 days,"On 7/21, North Dakota Gov. Kelly Armstrong (R) requested Public Assistance for 19 counties and statewide Hazard Mitigation.
+
+On 9/11, FEMA authorized Public Assistance (categories A-G) for 19 counties.
+
+No decision about Hazard Mitigation grants has been announced.",46.62311643,-97.60005909,55
+Crow Tribe of Montana,"Severe Storms, Flooding, and Straight-line Winds",5/18/2025,5/22/2025,7/17/2025,Approved (partial),Certain types of aid in limbo,9/11/2025,56 days,"On 7/17, the Crow Tribe of Montana requested Public Assistance and Hazard Mitigation grants.
+
+On 9/11, FEMA authorized Public Assistance (categories A-G) for the Crow Indian Reservation.
+
+No decision about Hazard Mitigation grants has been announced.",45.38033384,-107.8965325,56
+Kentucky,Severe Winter Storm,1/4/2025,1/11/2025,1/31/2025 (original) and 6/4/2025 (appeal),Rejected,,"7/22/2025 (appeal)
+
+5/21/2025 (original)",172 days (from original request to appeal denial),"On 5/21, FEMA rejected Kentucky Gov. Andy Beshear's (D) 1/31 request for Public Assistance and statewide Hazard Mitigation.
+
+On 6/4, Beshear submitted an appeal.
+
+On 7/22, FEMA rejected Beshear's appeal.",38.04226248,-84.52286587,57
+New Mexico,"Severe Storms, Flooding, and Landslides",6/23/2025,8/5/2025,7/8/2025,Approved (partial),Certain jurisdictions excluded and types of aid in limbo,7/22/2025,14 days,"On 7/8, New Mexico Gov. Michelle Grisham (D) requested Individual Assistance for 2 counties (Lincoln and Valencia), Public Assistance for 4 counties (Chaves, Lincoln, Otero, and Valencia) along with one tribe (Mescalero Apache Tribe), and statewide Hazard Mitigation.
+
+FEMA has authorized Individual Assistance for Doña Ana and Lincoln counties (Valenica County was excluded) and Public Assistance (categories A-G) for Doña Ana, Lincoln, and Otero counties as well as the Mescalero Reservation (Chaves and Valencia counties were excluded).
+
+No decision about Hazard Mitigation grants has been announced.",33.33375337,-105.6804654,58
+Missouri,Severe Storms and Flooding,5/23/2025,5/26/2025,6/21/2025,Approved (partial),Certain types of aid in limbo,7/22/2025,31 days,"On 6/21, Missouri Gov. Mike Kehoe (R) requested Public Assistance for 5 counties and Hazard Mitigation for an undisclosed number of counties.
+
+On 7/22, FEMA authorized Public Assistance (categories A-G) for 5 counties.
+
+No decision about Hazard Mitigation grants has been announced.",37.41295825,-93.84512763,59
+West Virginia,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",6/14/2025,6/15/2025,6/20/2025,Approved (partial),Certain types of aid in limbo,7/22/2025,32 days,"On 6/20, West Virginia Gov. Patrick Morrisey (R) requested Individual Assistance and Public Assistance for 2 counties and statewide Hazard Mitigation.
+
+On 7/22, FEMA authorized Individual Assistance and Public Assistance (categories A-G) for 2 counties.
+
+No decision about Hazard Mitigation grants has been announced.",40.06497188,-80.71400056,60
+Kansas,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",5/18/2025,5/19/2025,6/17/2025,Approved (partial),Certain types of aid in limbo,7/22/2025,35 days,"On 6/17, Kansas Gov. Laura Kelly (D) requested Public Assistance and Hazard Mitigation for an unspecified number of counties. 
+
+On 7/22, FEMA authorized Public Assistance (categories A-G) for 11 counties.
+
+No decision about Hazard Mitigation grants has been announced.",39.1272045,-100.6293864,61
+Indiana,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",3/30/2025,4/9/2025,5/28/2025,Approved (partial),Certain types of aid denied and other types of aid in limbo,7/22/2025,55 days,"On 5/28, Indiana Gov. Mike Braun (R) requested Individual Assistance, Public Assistance, and Hazard Mitigation for an unspecified number of counties.
+
+On 7/22, FEMA authorized Public Assistance (categories A-G) for 23 counties.
+
+On 8/11, FEMA authorized Public Assistance (categories A-G) for 1 additional county.
+
+On 8/21, FEMA authorized Public Assistance (categories A-G) for 1 additional county.
+
+Individual Assistance appears to have been denied.
+
+No decision about Hazard Mitigation grants has been announced.",39.84378524,-86.40028408,62
+Oregon,"Severe Storms, Flooding, Landslides, and Mudslides",3/13/2025,3/20/2025,5/19/2025,Approved (partial),Certain jurisdictions excluded and types of aid denied,7/22/2025,64 days,"On 5/19, Oregon Gov. Tina Kotek (D) requested Individual Assistance for 4 counties and the Burns Paiute Tribe, Public Assistance for 4 counties, and statewide Hazard Mitigation.
+
+On 7/22, FEMA authorized Public Assistance (categories A-G) for 3 counties (Harney County was excluded).
+
+On 8/28, FEMA authorized Public Assistance (categories A-G) for 1 additional county (Josephine). 
+
+Individual Assistance and Hazard Mitigation grants were denied.",43.6588967,-123.3180006,63
+Michigan,Severe Winter Storm,3/28/2025,3/30/2025,5/16/2025,Approved (partial),Certain types of aid denied,7/22/2025,67 days,"On 5/16, Michigan Gov. Gretchen Whitmer (D) requested Individual Assistance and Public Assistance for an unspecified number of counties.
+
+On 7/22, FEMA authorized Public Assistance (categories A-E, G) for 13 counties and one tribal government.
+
+On 7/22, FEMA denied Individual Assistance, Public Assistance (category F - Utilities), and Hazard Mitigation grants.
+
+On 8/25, Whitmer submitted an appeal.
+
+On 10/22, FEMA rejected Whitmer's appeal.
+
+On 3/10/26, FEMA authorized Public Assistance (category F - Utilities) for 13 counties and one tribal government.",46.54427515,-87.3975475,64
+Texas,"Severe Storms, Straight-line Winds, and Flooding",7/2/2025,8/1/2025,7/5/2025,Approved (partial),Certain types of aid in limbo,7/6/2025,1 day,"On 7/5, Texas Gov. Greg Abbott (R) requested Individual Assistance, Public Assistance, and Hazard Mitigation for Kerr County.
+
+On 7/6, FEMA authorized Individual Assistance and Public Assistance (categories A-G) for Kerr County.
+
+Abbott subsequently expanded his request to include additional counties.
+
+FEMA has authorized Individual Assistance for 10 counties and Public Assistance (categories A-G) for 22 counties.
+
+No decision about Hazard Mitigation grants has been announced.",30.04720897,-99.14950131,65
+Washington,"Severe Storms, Straight-line Winds, Flooding, Landslides, and Mudslides",11/17/2024,11/23/2024,1/14/2025 (original) and 5/7/2025 (appeal),Rejected,"A joint state/FEMA preliminary damage assessment estimated $33.88 million in losses, more than twice as much as Washington's $14.56 million threshold for FY2025. ","6/19/2025 (appeal)
+
+4/11/2025 (original)",156 days (from original request to appeal denial),"On 4/11, FEMA rejected former Washington Gov. Jay Inslee's (D) 1/14 request for Public Assistance for 6 counties and statewide Hazard Mitigation.
+
+On 5/7, Washington Gov. Bob Ferguson (D) submitted an appeal.
+
+On 6/19, FEMA rejected Ferguson's appeal.",47.60862671,-122.2042565,66
+Tennessee,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",4/2/2025,4/6/2025,4/17/2025,Approved (partial),Certain jurisdictions excluded,6/19/2025,63 days,"On 4/17, Tennessee Gov. Bill Lee (R) requested Individual Assistance for 15 counties and Public Assistance for 23 counties.
+
+On 6/19, FEMA authorized Individual Assistance for 9 counties (Grundy, Hickman, Humphreys, Lewis, Perry, and Sumner counties were excluded).
+
+FEMA has authorized Public Assistance (categories A-G) for 28 counties (Lake and Wilson counties were excluded).",35.17045632,-88.59416538,67
+Missouri,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",5/16/2025,5/16/2025,5/25/2025,Approved (partial),Certain jurisdictions excluded,6/9/2025,15 days,"On 5/25, Missouri Gov. Mike Kehoe (R) requested Individual Assistance for 7 counties and the City of St. Louis and Public Assistance for 2 counties and the City of St. Louis.
+
+On 6/9, FEMA authorized Individual Assistance and Public Assistance (categories A-G) for 2 counties (Scott, St. Louis) and the City of St. Louis.
+
+Cape Girardeau, Iron, New Madrid, Stoddard, and Wayne counties were not granted Individual Assistance. ",38.6276604,-90.20934652,68
+Missouri,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",4/29/2025,4/29/2025,5/19/2025,Approved (partial),Certain types of aid denied,6/9/2025,21 days,"On 5/19, Missouri Gov. Mike Kehoe (R) requested Public Assistance (categories A-G) for 6 counties.
+
+On 6/9, FEMA authorized Public Assistance (categories A-F) for 6 counties.
+
+Public Assistance (category G - Parks, Recreational, and Other Facilities) was denied.
+
+A joint state/FEMA preliminary damage assessment estimated $16.62 million in losses, well above Missouri's $11.63 million threshold for FY2025. ",37.21761,-93.17707191,69
+Kentucky,"Severe Storms, Straight-line Winds, and Tornadoes",5/16/2025,5/17/2025,5/20/2025,Approved (partial),Certain jurisdictions excluded and types of aid denied,5/23/2025,3 days - 63 days,"On 5/20, Kentucky Gov. Andy Beshear (D) requested Individual Assistance for 8 counties, Public Assistance for 22 counties, and statewide Hazard Mitigation.
+
+On 5/23, FEMA authorized Individual Assistance for 6 counties. (Christian and Todd counties were excluded.)
+
+Beshear expanded his request for Public Assistance to 40 counties.
+
+On 7/22, FEMA authorized Public Assistance (categories A-G) for 36 counties.
+
+On 7/23, FEMA added 3 counties for Public Assistance (categories A-G). (Leslie County was excluded.)
+
+On 7/29, FEMA denied Hazard Mitigation grants.",37.09276492,-84.60555237,70
+Hawaii          ,Severe Storms and Flooding,1/29/2025,,3/14/2025,Rejected,,5/21/2025,68 days,,20.79068184,-156.3256411,71
+Arkansas,"Severe Storms, Tornadoes, and Flooding",4/2/2025,4/22/2025,5/3/2025,Approved (partial),Certain jurisdictions excluded and types of aid in limbo,5/21/2025,18 days,"On 5/3, Arkansas Gov. Sarah Huckabee Sanders (R) requested Individual Assistance for 25 counties, Public Assistance for 36 counties, and statewide Hazard Mitigation.
+
+On 5/21, FEMA authorized Individual Assistance for 16 counties (Arkansas, Cross, Grant, Greene, Hempstead, Lawrence, Little River, Mississippi, and Poinsett counties were excluded) and Public Assistance (categories A-G) for 36 counties.
+
+On 6/24, FEMA added 1 county (Greene) for Individual Assistance and 3 counties for Public Assistance (categories A-G).
+
+No decision about Hazard Mitigation grants has been announced.",35.82102158,-90.446284,72
+Missouri,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",3/30/2025,4/8/2025,5/1/2025,Approved (partial),Certain types of aid denied,5/21/2025,20 days - 175 days,"On 5/1, Missouri Gov. Mike Kehoe (R) requested Individual Assistance for 20 counties and Public Assistance for 25 counties.
+
+On 5/21, FEMA authorized Public Assistance (categories A-G) for 25 counties.
+
+On 6/2, FEMA denied Hazard Mitigation grants.
+
+On 6/25, FEMA added 1 county for Public Assistance (categories A-G).
+
+On 10/23, FEMA authorized Individual Assistance for 20 counties.",37.08471376,-94.51342788,73
+Texas,Severe Storms and Flooding,3/26/2025,3/28/2025,4/17/2025,Approved (partial),Certain types of aid in limbo,5/21/2025,34 days,"On 4/17, Texas Gov. Greg Abbott (R) requested Individual Assistance for 4 counties.
+
+On 5/21, FEMA authorized Individual Assistance for 4 counties.
+
+No decision about Hazard Mitigation grants has been announced.",27.79815556,-97.40911911,74
+Iowa,Severe Winter Storm,3/19/2025,3/19/2025,4/15/2025,Approved (partial),Certain types of aid denied,5/21/2025,36 days,"On 4/15, Iowa Gov. Kim Reynolds (R) requested Public Assistance for 4 counties and statewide Hazard Mitigation.
+
+On 5/21, FEMA authorized Public Assistance (categories A-G) for 4 counties.
+
+On 6/2, FEMA denied Hazard Mitigation grants.",42.02655971,-96.09680181,75
+Kansas,"Severe Storms, Fires, and Winter Storm",3/14/2025,3/19/2025,4/15/2025,Approved (partial),Certain types of aid in limbo,5/21/2025,36 days,"On 4/15, Kansas Gov. Laura Kelly (D) requested Public Assistance for an unspecified number of counties.
+
+On 5/21, FEMA authorized Public Assistance (categories A-G) for 28 counties.
+
+No decision about Hazard Mitigation grants has been announced.",39.3511798,-101.7101142,76
+Nebraska,Severe Winter Storm and Straight-line Winds,3/18/2025,3/19/2025,4/11/2025,Approved (partial),Certain types of aid in limbo,5/21/2025,40 days,"On 4/11, Nebraska Gov. Jim Pillen (R) requested Public Assistance for 27 counties.
+
+On 5/21, FEMA authorized Public Assistance (categories A-G) for 27 counties.
+
+On 6/13, FEMA added 1 county for Public Assistance (categories A-G).
+
+No decision about Hazard Mitigation grants has been announced.",41.25704938,-95.9340664,77
+Missouri,"Severe Storms, Straight-line Winds, Tornadoes, and Wildfires",3/14/2025,3/15/2025,4/2/2025,Approved (partial),Certain jurisdictions excluded and types of aid denied,5/21/2025,49 days,"On 4/2, Missouri Gov. Mike Kehoe (R) requested Individual Assistance for 25 counties and Public Assistance for 20 counties.
+
+On 5/21, FEMA authorized Individual Assistance for 18 counties (Dunklin, Laclede, Madison, New Madrid, Pemiscot, Pulaski, and Stoddard counties were excluded) and Public Assistance (categories A-G) for 20 counties.
+
+On 6/2, FEMA denied Hazard Mitigation grants.
+
+On 6/24, FEMA added 1 county for Public Assistance (categories A-G).",36.75742851,-90.3904824,78
+Mississippi,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",3/14/2025,3/15/2025,4/1/2025,Approved (partial),Certain jurisdictions excluded and types of aid denied,5/21/2025,50 days,"On 4/1, Mississippi Gov. Tate Reeves (R) requested Individual Assistance for 14 counties and Public Assistance for 17 counties.
+
+On 5/21, FEMA authorized Individual Assistance for 11 counties (Carroll, Holmes, and Jasper counties were excluded) and Public Assistance (categories A-G) for 17 counties.
+
+On 6/2, FEMA denied Hazard Mitigation grants.
+
+On 6/25, FEMA added 1 county for Public Assistance (categories A-G).",31.11605768,-90.14086049,79
+Oklahoma,Wildfires and Straight-line Winds,3/14/2025,3/21/2025,3/21/2025,Approved (partial),Certain types of aid denied,5/21/2025,61 days,"On 3/21, Oklahoma Gov. Kevin Stitt (R) requested Individual Assistance for 7 counties.
+
+On 5/21, FEMA authorized Individual Assistance for 7 counties.
+
+On 6/2, FEMA denied Hazard Mitigation grants.",36.11520298,-97.06100482,80
+Arkansas,Severe Storms and Tornadoes,3/14/2025,3/15/2025,3/21/2025 (original) and 4/18/2025 (appeal),Approved (partial),Certain types of aid denied,"5/8/2025 (appeal partially approved) 
+
+4/11/2025 (original request denied)",48 days (from original request to partial approval),"On 3/21, Arkansas Gov. Sarah Huckabee Sanders (R) requested Individual Assistance for 9 counties and statewide Hazard Mitigation.
+
+On 3/29, Sanders amended her request to include Public Assistance (categories A-G) for 11 counties.
+
+On 4/11, FEMA rejected Sanders' request, writing that ""the damage from this event was not of such severity and magnitude as to be beyond the capabilities of the state, affected local governments, and voluntary agencies.""
+
+On 4/18, Sanders submitted an appeal. In it, she reiterated her request for Individual Assistance for 9 counties, Public Assistance for 11 counties, and statewide Hazard Mitigation.
+
+On 5/8, FEMA authorized Individual Assistance for 9 counties.
+
+On 5/16, FEMA denied Hazard Mitigation grants.
+
+Public Assistance appears to have been denied.",35.63871191,-91.26544952,81
+Kentucky,"Severe Storms, Straight-line Winds, Tornadoes, Flooding, Landslides, and Mudslides",4/2/2025,,4/11/2025,Approved (partial),Certain types of aid denied,4/24/2025,13 days,"On 4/11, Kentucky Gov. Andy Beshear (D) requested Individual Assistance for 13 counties, Public Assistance for 24 counties, and statewide Hazard Mitigation.
+
+On 4/24, FEMA authorized Individual Assistance for 13 counties.
+
+On 4/28, Beshear added 16 counties to his request for Individual Assistance, expanded his request for Public Assistance to include an additional 66 counties, and asked again for statewide Hazard Mitigation.
+
+On 5/5, Beshear added 8 counties to his request for Individual Assistance.
+
+On 5/14, FEMA authorized Individual Assistance for 24 additional counties.
+
+FEMA has authorized Public Assistance (categories A-G) for 90 counties.
+
+On 7/29, FEMA denied Hazard Mitigation grants.",37.21246657,-86.8928533,82
+Muscogee Creek Nation,Severe Winter Storm,2/18/2025,2/20/2025,4/21/2025,Unclear (removed from FEMA daily operations briefing),,,> 250 days and counting,This request was included in FEMA's daily operations briefing before 5/29.,35.66642153,-95.92684869,83
+Tennessee,Severe Storms,2/15/2025,2/16/2025,3/18/2025,Rejected,,4/11/2025,24 days,,36.52985651,-87.36259079,84
+California,Wildfires,7/24/2024,8/26/2024,9/24/2024 (original) and Dec. 2024 (appeal),Rejected,,4/11/2025,199 days from original request to appeal denial (81 days during Trump administration),,39.65101539,-121.6332586,85
+Virginia,Severe Winter Storms and Flooding,2/10/2025,2/18/2025,2/16/2025,Approved (partial),Certain types of aid denied,4/4/2025,47 days,"After submitting his original request on 2/16, Virginia Gov. Glenn Youngkin (R) expanded it to include Individual Assistance and Public Assistance for additional jurisdictions, as well as statewide Hazard Mitigation. 
+
+FEMA has authorized Public Assistance (categories A-G) for 35 counties and the City of Bristol.
+
+On 5/23, FEMA denied Hazard Mitigation grants.
+
+Individual Assistance appears to have been denied.",37.11478705,-81.51975908,86
+Oklahoma,"Severe Storms, Straight-line Winds, Tornadoes, and Flooding",11/2/2024,11/5/2024,Dec. 2024-Jan. 2025,Approved (partial),Certain types of aid denied,3/18/2025,~ 60 days,"Oklahoma Gov. Kevin Stitt (R) requested Individual Assistance for an unspecified number of counties in December 2024 and Public Assistance for an unspecified number of counties in January 2025. Stitt also requested statewide Hazard Mitigation.
+
+On 3/18, FEMA authorized Public Assistance (categories A-G) for 8 counties and statewide Hazard Mitigation.
+
+Individual Assistance appears to have been denied.",35.40625675,-97.15794925,87
+West Virginia,"Severe Storms, Straight-line Winds, Flooding, Landslides, and Mudslides",2/15/2025,2/18/2025,2/17/2025,Approved (partial),Certain jurisdictions excluded,2/26/2025,9 days - 43 days,"On 2/17, West Virginia Gov. Patrick Morrisey (R) requested Individual Assistance and Public Assistance for 13 counties, as well as statewide Hazard Mitigation.
+
+On 2/26, FEMA authorized Individual Assistance for 4 counties (McDowell, Mercer, Mingo and Wyoming), along with statewide Hazard Mitigation.
+
+On 3/10, FEMA authorized Individual Assistance for Logan and Wayne counties.
+
+On 3/19, FEMA authorized Public Assistance (categories A-G) for 10 counties (Greenbrier, Lincoln, Logan, McDowell, Mercer, Mingo, Monroe, Summers, Wayne, and Wyoming).
+
+On 4/1, FEMA authorized Individual Assistance for Raleigh County and Public Assistance (categories A-G) for Boone and Raleigh counties.
+
+On 4/22, Morrisey said that he would consider appealing FEMA's denial of individual aid for Boone, Cabell, Greenbrier, Kanawha, Lincoln, Monroe, and Summers counties and public aid for Cabell and Kanawha counties.",37.80454582,-80.42906879,88
+Kentucky,"Severe Storms, Straight-line Winds, Flooding, Landslides, and Mudslides",2/14/2025,3/7/2025,2/17/2025,Approved (partial),Certain jurisdictions excluded,2/24/2025,7 days,"After submitting his original request on 2/17, Kentucky Gov. Andy Beshear (D) expanded it to include Individual Assistance for 22 counties, Public Assistance for 69 counties, and statewide Hazard Mitigation.
+
+In its 2/24 declaration and subsequent amendments, FEMA authorized Individual Assistance for 16 counties, Public Assistance category B for 68 counties and categories A and C-G for 67 counties, and statewide Hazard Mitigation.
+
+On 4/23, Beshear announced that he planned to appeal FEMA's 4/22 denial of individual aid for Butler, Franklin, Knox, Laurel, Lawrence, and Whitley counties and public aid for Simpson and Woodford counties. ",37.47993105,-82.51846192,89

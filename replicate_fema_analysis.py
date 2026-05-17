@@ -589,8 +589,9 @@ def fetch_declarations_page(skip=0, top=1000, declaration_type="DR"):
     url = (
         f"https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
         f"?$top={top}&$skip={skip}"
-        f"&$select=disasterNumber,state,declarationDate,declarationType,"
-        f"incidentType,paProgramDeclared,iaProgramDeclared,"
+        f"&$select=disasterNumber,state,declarationDate,declarationRequestDate,"
+        f"declarationType,incidentType,"
+        f"paProgramDeclared,iaProgramDeclared,hmProgramDeclared,"
         f"declarationRequestNumber"
         f"&$filter={filter_val}"
         f"&$orderby=declarationDate%20asc"
@@ -929,11 +930,119 @@ def analyze(approved_records, denied_records, all_types=False, governor_only=Fal
 
 
 # ============================================================================
+# PART 3.5: PENDING REQUESTS AUGMENTATION
+# ============================================================================
+# A third-party Disaster Tracker spreadsheet manually compiles pending Major
+# Disaster requests. OpenFEMA does not publish a request until it has been
+# decided, so requests stuck in "Pending" status are invisible to the canonical
+# pipeline. Treating long-pending requests as de-facto denials gives a more
+# realistic picture of Trump 2's record.
+
+_STATE_NAME_TO_ABBR = {
+    "Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
+    "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL","Georgia":"GA",
+    "Hawaii":"HI","Idaho":"ID","Illinois":"IL","Indiana":"IN","Iowa":"IA",
+    "Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME","Maryland":"MD",
+    "Massachusetts":"MA","Michigan":"MI","Minnesota":"MN","Mississippi":"MS","Missouri":"MO",
+    "Montana":"MT","Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ",
+    "New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND","Ohio":"OH",
+    "Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA","Rhode Island":"RI","South Carolina":"SC",
+    "South Dakota":"SD","Tennessee":"TN","Texas":"TX","Utah":"UT","Vermont":"VT",
+    "Virginia":"VA","Washington":"WA","West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY",
+}
+
+
+def load_pending_as_denials(csv_path, threshold_days=30,
+                             governor_only=False, two_thirds=False):
+    """
+    Read a Disaster Tracker CSV and return pending-as-denial buckets:
+        [(president, alignment, abbr, submission_iso, days_pending), ...]
+    Tribal entries (no state-party alignment) and mixed-government states are
+    skipped from D/R buckets and returned separately for reporting.
+    """
+    import csv as _csv
+    import re as _re
+    rows = []
+    with open(csv_path) as f:
+        for r in _csv.DictReader(f):
+            if r.get("Major Disaster Declaration Decision") != "Pending":
+                continue
+            m = _re.match(r"(\d+)", r.get("Waiting Period", ""))
+            if not m or int(m.group(1)) <= threshold_days:
+                continue
+            name = r.get("State/Tribe", "").strip()
+            abbr = _STATE_NAME_TO_ABBR.get(name)
+            req_raw = r.get("Major Disaster Declaration Request", "").strip()
+            if not req_raw:
+                continue
+            mo, da, yr = req_raw.split("/")
+            req_iso = f"{yr}-{int(mo):02d}-{int(da):02d}"
+            rows.append({"name": name, "abbr": abbr, "req_iso": req_iso,
+                         "days": int(m.group(1))})
+
+    buckets, skipped_tribal, skipped_mixed = [], [], []
+    for row in rows:
+        if row["abbr"] is None:
+            skipped_tribal.append(row); continue
+        pres = get_president(row["req_iso"])
+        align = get_state_alignment(row["abbr"], row["req_iso"],
+                                    governor_only=governor_only,
+                                    two_thirds=two_thirds)
+        if not pres or align not in ("D", "R"):
+            skipped_mixed.append({**row, "align": align}); continue
+        buckets.append((pres, align, row["abbr"], row["req_iso"], row["days"]))
+    return buckets, skipped_tribal, skipped_mixed
+
+
+def augment_counts_with_pending(counts, csv_path, threshold_days=30,
+                                 governor_only=False, two_thirds=False,
+                                 verbose=True):
+    """
+    Return a deep copy of `counts` with pending-as-denial increments applied,
+    plus a metadata dict describing what was added/skipped.
+    `counts` is the nested dict from analyze(): counts[pres][align]={"approved","denied"}.
+    """
+    import copy
+    augmented = copy.deepcopy(counts)
+    buckets, tribal, mixed = load_pending_as_denials(
+        csv_path, threshold_days=threshold_days,
+        governor_only=governor_only, two_thirds=two_thirds,
+    )
+
+    added = defaultdict(int)
+    for pres, align, _abbr, _iso, _days in buckets:
+        if pres not in augmented:
+            augmented[pres] = {}
+        if align not in augmented[pres]:
+            augmented[pres][align] = {"approved": 0, "denied": 0}
+        augmented[pres][align]["denied"] += 1
+        added[(pres, align)] += 1
+
+    meta = {
+        "threshold_days": threshold_days,
+        "added": dict(added),
+        "skipped_tribal": tribal,
+        "skipped_mixed": mixed,
+        "total_added": sum(added.values()),
+    }
+    if verbose:
+        print(f"\n── Pending-as-denial augmentation (threshold > {threshold_days} days) ──")
+        print(f"  Source: {csv_path}")
+        print(f"  Added: {meta['added']}")
+        print(f"  Skipped tribal (no state alignment): {len(tribal)}")
+        print(f"  Skipped mixed/unaligned: {len(mixed)}")
+        for m in mixed:
+            print(f"    {m['name']} ({m['abbr']}) — alignment={m.get('align')}")
+    return augmented, meta
+
+
+# ============================================================================
 # PART 4: CHART GENERATION
 # ============================================================================
 
 def plot_chart(counts, output_path="fema_approval_rates.png",
-               governor_only=False, two_thirds=False):
+               governor_only=False, two_thirds=False,
+               augmented_counts=None, pending_meta=None):
     """
     Generate the two-line chart replicating the Politico visualization.
     Requires matplotlib (pip install matplotlib).
@@ -985,13 +1094,51 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
     ax.plot(xs, d_rates, color=DEM_COLOR, linewidth=2.4, marker="o",
             markersize=5.5, zorder=3, solid_capstyle="round")
 
+    # ── Pending-as-denial ghost markers ────────────────────────────────────
+    # If augmented counts are supplied, compute the alternate Trump 2 rate(s)
+    # and draw hollow markers + dashed connector showing the drop.
+    aug_d_rate = aug_r_rate = None
+    if augmented_counts is not None and valid_labels:
+        last_pres = PRES_ORDER[len(valid_labels) - 1]
+        ac = augmented_counts.get(last_pres, {})
+        ad = ac.get("D", {"approved": 0, "denied": 0})
+        ar = ac.get("R", {"approved": 0, "denied": 0})
+        adt = ad["approved"] + ad["denied"]
+        art = ar["approved"] + ar["denied"]
+        if adt > 0 and abs(ad["approved"] / adt * 100 - d_rates[-1]) > 0.05:
+            aug_d_rate = ad["approved"] / adt * 100
+        if art > 0 and abs(ar["approved"] / art * 100 - r_rates[-1]) > 0.05:
+            aug_r_rate = ar["approved"] / art * 100
+
+    def _draw_ghost(orig, aug, color):
+        if aug is None:
+            return
+        x = xs[-1]
+        ax.plot([x, x], [orig, aug], color=color, linewidth=1.3,
+                linestyle=(0, (2, 2)), zorder=2, alpha=0.85)
+        ax.plot([x], [aug], marker="o", markersize=6.5,
+                markerfacecolor="white", markeredgecolor=color,
+                markeredgewidth=1.6, zorder=4)
+
+    _draw_ghost(d_rates[-1], aug_d_rate, DEM_COLOR)
+    _draw_ghost(r_rates[-1], aug_r_rate, REP_COLOR)
+
     # ── End-of-line labels ─────────────────────────────────────────────────
+    # If we drew a Dem ghost, the original solid label goes near orig and a
+    # second smaller annotation labels the ghost.
     ax.text(xs[-1] + LABEL_PAD, r_rates[-1], "Republican\nstates",
             color=REP_COLOR, fontsize=9.5, va="center", ha="left",
             fontweight="bold")
     ax.text(xs[-1] + LABEL_PAD, d_rates[-1], "Democratic\nstates",
             color=DEM_COLOR, fontsize=9.5, va="center", ha="left",
             fontweight="bold")
+    if aug_d_rate is not None and pending_meta is not None:
+        n = pending_meta.get("added", {}).get(("Trump 2", "D"), 0)
+        thresh = pending_meta.get("threshold_days", 30)
+        ax.text(xs[-1] + LABEL_PAD, aug_d_rate,
+                f"incl. {n} pending\n>{thresh}d as denied",
+                color=DEM_COLOR, fontsize=8, va="center", ha="left",
+                fontstyle="italic", alpha=0.9)
 
     # ── Axes ───────────────────────────────────────────────────────────────
     ax.set_xticks(xs)
@@ -1127,6 +1274,21 @@ CLASSIFICATION FLAGS (how states are categorized):
         ),
     )
     parser.add_argument(
+        "--include-pending",
+        metavar="CSV",
+        help=(
+            "Path to the Disaster Tracker CSV. Pending Major Disaster requests "
+            "that have waited longer than --pending-threshold-days are counted "
+            "as denials in the most recent president's column, and a hollow "
+            "ghost marker is drawn showing the resulting drop in approval rate."
+        ),
+    )
+    parser.add_argument(
+        "--pending-threshold-days", type=int, default=30,
+        help="Days a request can be pending before being counted as a denial "
+             "under --include-pending. Default 30.",
+    )
+    parser.add_argument(
         "--fema-web",
         action="store_true",
         help=(
@@ -1202,9 +1364,22 @@ CLASSIFICATION FLAGS (how states are categorized):
         suffix += "_gov_only" if args.governor_only else ""
         suffix += "_two_thirds" if args.two_thirds else ""
         suffix += "_incl_emergency" if args.include_emergency else ""
+
+        augmented_counts = None
+        pending_meta     = None
+        if args.include_pending:
+            augmented_counts, pending_meta = augment_counts_with_pending(
+                results, args.include_pending,
+                threshold_days=args.pending_threshold_days,
+                governor_only=args.governor_only,
+                two_thirds=args.two_thirds,
+            )
+            suffix += "_with_pending"
+
         output = f"fema_approval_rates{suffix}.png"
         plot_chart(results, output_path=output,
-                   governor_only=args.governor_only, two_thirds=args.two_thirds)
+                   governor_only=args.governor_only, two_thirds=args.two_thirds,
+                   augmented_counts=augmented_counts, pending_meta=pending_meta)
 
     except Exception as e:
         print(f"\nAPI fetch failed: {e}")

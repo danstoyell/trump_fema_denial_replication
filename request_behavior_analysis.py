@@ -162,7 +162,10 @@ def load_pending_as_denials(csv_path, threshold_days=30,
         for r in reader:
             if r.get("Major Disaster Declaration Decision") != "Pending":
                 continue
-            m = re.match(r"(\d+)", r.get("Waiting Period", ""))
+            # Tracker renamed "Waiting Period" ("N days and counting") to
+            # "Waiting Period (Days)" (bare number) in mid-2026; accept both.
+            wait = r.get("Waiting Period") or r.get("Waiting Period (Days)", "")
+            m = re.match(r"(\d+)", wait)
             if not m or int(m.group(1)) <= threshold_days:
                 continue
             name = r.get("State/Tribe", "").strip()

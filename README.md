@@ -16,6 +16,7 @@ Independent replication of the POLITICO/E&E News analysis (Thomas Frank) showing
 | `trump2_sensitivity_chart.py` | Grouped bar chart showing Trump 2nd term denial rates across all 12 methodology combinations |
 | `trump2_scatter.py` | Scatterplot of state-level FEMA approval rate vs 2024 Trump vote share (`--include-emergency` adds EM on both sides) |
 | `request_behavior_analysis.py` | 4-panel chart testing whether the partisan gap reflects request behavior (volume, scope, incident mix) or decisionmaker behavior |
+| `significance_tests.py` | Binomial and Fisher's exact tests of the Trump 2nd term Dem/Rep gap for all 24 flag combinations, plus vote-share correlation tests (Pearson, Spearman, request-weighted) → `significance_results.md` (needs `scipy`) |
 
 All scripts support `--fema-web` (see below). Run any script with `--help` for full flag documentation.
 
@@ -173,6 +174,8 @@ All flags can be freely combined. Output filenames are suffixed to reflect the a
 | Default (trifecta, DR only, natural disasters) | 17 / 37 (45.9%) | 56 / 66 (84.8%) | 38.9 pts |
 | `--fema-web --all-types --include-emergency` (trifecta) | 25 / 49 (51.0%) | 70 / 85 (82.4%) | 31.4 pts |
 | …plus `--include-pending` (Oct 23 tracker) | 25 / 49 (51.0%) | 70 / 86 (81.4%) | 30.4 pts |
+
+Fisher's exact test puts the gap at p = 1.7 × 10⁻⁴ for the `--fema-web --all-types --include-emergency` trifecta configuration; the weakest of the 24 combinations (governor-only, natural disasters, DR+EM) is p = 0.010. The state-level correlation between approval rate and 2024 Trump vote share is r = 0.53 (p = 1.5 × 10⁻⁴). Full tables: [`significance_results.md`](significance_results.md).
 
 The partisan gap appears in **all 24 flag combinations**: Republican states' approval rate exceeds Democratic states' by 18.6–38.9 percentage points. It is narrowest under governor-only classification and widest under trifecta with major disasters only. Under Biden the same 24 combinations show gaps between −5.1 and +0.4 points, with Democratic states usually slightly ahead.
 

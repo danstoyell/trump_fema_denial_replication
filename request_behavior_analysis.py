@@ -46,6 +46,8 @@ from replicate_fema_analysis import (
     fetch_all_fema_web,
     get_state_alignment,
     get_president,
+    load_pending_as_denials,
+    decided_request_keys,
 )
 
 OUTPUT_PATH = "request_analysis.png"
@@ -131,71 +133,8 @@ def president_for(date_str):
     return get_president(date_str)
 
 
-# ── Pending-requests-as-denials augmentation ──────────────────────────────
-
-_STATE_NAME_TO_ABBR = {
-    "Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
-    "Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL","Georgia":"GA",
-    "Hawaii":"HI","Idaho":"ID","Illinois":"IL","Indiana":"IN","Iowa":"IA",
-    "Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME","Maryland":"MD",
-    "Massachusetts":"MA","Michigan":"MI","Minnesota":"MN","Mississippi":"MS","Missouri":"MO",
-    "Montana":"MT","Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ",
-    "New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND","Ohio":"OH",
-    "Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA","Rhode Island":"RI","South Carolina":"SC",
-    "South Dakota":"SD","Tennessee":"TN","Texas":"TX","Utah":"UT","Vermont":"VT",
-    "Virginia":"VA","Washington":"WA","West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY",
-}
-
-def load_pending_as_denials(csv_path, threshold_days=30,
-                             governor_only=False, two_thirds=False):
-    """
-    Read a third-party Disaster Tracker CSV (manually compiled list of pending
-    Major Disaster requests) and return a list of synthetic denial buckets:
-        [(president, alignment, state_abbr, submission_iso), ...]
-    Pending tribal requests are skipped — they have no state-party alignment.
-    Pending requests for which alignment is None/Mixed are skipped from the
-    D/R buckets but reported in the console output.
-    """
-    rows = []
-    with open(csv_path) as f:
-        reader = csv.DictReader(f)
-        for r in reader:
-            if r.get("Major Disaster Declaration Decision") != "Pending":
-                continue
-            # Tracker renamed "Waiting Period" ("N days and counting") to
-            # "Waiting Period (Days)" (bare number) in mid-2026; accept both.
-            wait = r.get("Waiting Period") or r.get("Waiting Period (Days)", "")
-            m = re.match(r"(\d+)", wait)
-            if not m or int(m.group(1)) <= threshold_days:
-                continue
-            name = r.get("State/Tribe", "").strip()
-            abbr = _STATE_NAME_TO_ABBR.get(name)
-            req_raw = r.get("Major Disaster Declaration Request", "").strip()
-            if not req_raw:
-                continue
-            mo, da, yr = req_raw.split("/")
-            req_iso = f"{yr}-{int(mo):02d}-{int(da):02d}"
-            rows.append({
-                "name": name, "abbr": abbr, "req_iso": req_iso,
-                "days": int(m.group(1)),
-            })
-
-    buckets = []
-    skipped_tribal, skipped_mixed = [], []
-    for row in rows:
-        if row["abbr"] is None:
-            skipped_tribal.append(row)
-            continue
-        pres = president_for(row["req_iso"])
-        align = get_state_alignment(row["abbr"], row["req_iso"],
-                                    governor_only=governor_only,
-                                    two_thirds=two_thirds)
-        if not pres or align not in ("D", "R"):
-            skipped_mixed.append({**row, "align": align})
-            continue
-        buckets.append((pres, align, row["abbr"], row["req_iso"], row["days"]))
-
-    return buckets, skipped_tribal, skipped_mixed
+# Pending-requests-as-denials augmentation: load_pending_as_denials() is
+# shared with replicate_fema_analysis.py (imported above).
 
 
 # ── Compute stats ──────────────────────────────────────────────────────────
@@ -638,9 +577,10 @@ if __name__ == "__main__":
     out_path = OUTPUT_PATH
     if args.include_pending:
         thresh = args.pending_threshold_days
-        buckets, tribal, mixed = load_pending_as_denials(
+        buckets, tribal, mixed, decided = load_pending_as_denials(
             args.include_pending, threshold_days=thresh,
             governor_only=args.governor_only, two_thirds=args.two_thirds,
+            decided=decided_request_keys(approved, denied),
         )
         added = defaultdict(int)
         for pres, align, abbr, req_iso, days in buckets:
@@ -653,6 +593,9 @@ if __name__ == "__main__":
         print(f"  Added to denial buckets: {dict(added)}")
         print(f"  Skipped (tribal, no state alignment): {len(tribal)}")
         print(f"  Skipped (mixed / no alignment): {len(mixed)}")
+        print(f"  Skipped (already decided in OpenFEMA): {len(decided)}")
+        for d in decided:
+            print(f"    {d['name']} ({d['abbr']}) requested {d['req_iso']}")
         if mixed:
             for m in mixed:
                 print(f"    {m['name']} ({m['abbr']}) — alignment={m['align']}")

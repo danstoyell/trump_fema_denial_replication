@@ -4,7 +4,7 @@ Trump Combined (1st + 2nd Term) FEMA Denial Rates by State Classification
 Bar chart showing denial rates for Democratic vs Republican states across
 three classification methods:
   1. Election result  — state classified by 2024 Trump vote share (>50% = R)
-  2. Governor only    — classified by governor's party at time of request
+  2. Governor only    — classified by governor's party at time of decision
   3. Trifecta         — governor + both senators must all match (default)
 
 Both Trump terms (Jan 20 2017 – Jan 20 2021 and Jan 20 2025 – present)
@@ -217,8 +217,8 @@ def plot(counts, fema_web=False):
     ax.legend(handles=[dem_patch, rep_patch], loc="upper right",
               fontsize=9, framealpha=0.9)
 
-    approvals_src = ("v1/FemaWebDisasterDeclarations" if fema_web
-                     else "v2/DisasterDeclarationsSummaries")
+    approvals_src = ("OpenFEMA v1 FemaWebDisasterDeclarations" if fema_web
+                     else "OpenFEMA v2 DisasterDeclarationsSummaries")
 
     fig.text(
         0.5, 0.97,
@@ -227,20 +227,20 @@ def plot(counts, fema_web=False):
     )
     fig.text(
         0.5, 0.90,
-        f"DR declarations only · Natural disasters only · Jan 2017–Jan 2021 and Jan 2025–present · {approvals_src}",
+        f"Major disasters only · All incident types · Jan 2017–Jan 2021 and Jan 2025–present · Approvals: {approvals_src}",
         fontsize=8.5, ha="center", va="top", color="#555555",
     )
     fig.text(
         0.02, 0.01,
         "Election result: state classified R if Trump 2024 vote share >50%, else D.\n"
-        "Governor: classified by governor's party at time of request. "
+        "Governor: classified by governor's party at time of decision. "
         "Trifecta: governor + both senators must all match.\n"
-        "Source: Independent replication using FEMA Disaster Declarations Summaries and "
+        "Source: Independent replication using OpenFEMA disaster declaration and "
         "Declaration Denials APIs. Inspired by POLITICO/E&E News reporting (Thomas Frank).",
         fontsize=7.5, va="bottom", ha="left", color="#888888", linespacing=1.5,
     )
 
-    plt.subplots_adjust(left=0.1, right=0.95, top=0.87, bottom=0.18)
+    plt.subplots_adjust(left=0.1, right=0.95, top=0.84, bottom=0.18)
     plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"Chart saved to {OUTPUT_PATH}")
     plt.close()

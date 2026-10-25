@@ -1,7 +1,8 @@
 """
 Biden vs Trump 2nd Term — FEMA Denial Rates by State Party
 ===========================================================
-Methodology: two-thirds classification, DR+EM declarations, all incident types.
+Methodology: two-thirds classification, all incident types. Major Disasters (DR)
+by default; --include-emergency adds Emergency (EM) declarations on both sides.
 
 Output: biden_vs_trump2_denial_rates.png
 """
@@ -16,15 +17,18 @@ from replicate_fema_analysis import (
     fetch_denials_page,
     fetch_all_fema_web,
     analyze,
+    config_line,
 )
 
 OUTPUT_PATH = "biden_vs_trump2_denial_rates.png"
 
 
-def fetch_data(fema_web=False):
+def fetch_data(fema_web=False, include_emergency=False):
+    # Approval scope must match the denial scope analyze() applies, or EM
+    # approvals land in the numerator with no EM denials in the denominator.
     if fema_web:
-        print("Fetching approvals from FemaWeb endpoint (DR+EM)...")
-        approved = fetch_all_fema_web(include_emergency=True)
+        print("Fetching approvals from FemaWeb endpoint...")
+        approved = fetch_all_fema_web(include_emergency=include_emergency)
         print(f"  {len(approved)} rows")
     else:
         print("Fetching DR approvals...")
@@ -33,14 +37,16 @@ def fetch_data(fema_web=False):
             "DisasterDeclarationsSummaries",
         )
         print(f"  {len(dr)} rows")
+        approved = dr
 
-        print("Fetching EM approvals...")
-        em = fetch_all_pages(
-            lambda skip: fetch_declarations_page(skip, declaration_type="EM"),
-            "DisasterDeclarationsSummaries",
-        )
-        print(f"  {len(em)} rows")
-        approved = dr + em
+        if include_emergency:
+            print("Fetching EM approvals...")
+            em = fetch_all_pages(
+                lambda skip: fetch_declarations_page(skip, declaration_type="EM"),
+                "DisasterDeclarationsSummaries",
+            )
+            print(f"  {len(em)} rows")
+            approved = dr + em
 
     print("Fetching denials...")
     denied = fetch_all_pages(fetch_denials_page, "DeclarationDenials")
@@ -58,7 +64,7 @@ def denial_rate(counts, president, alignment):
     return rate, total, c["approved"], c["denied"]
 
 
-def plot(counts, fema_web=False, include_emergency=True):
+def plot(counts, fema_web=False, include_emergency=False):
     try:
         import matplotlib
         matplotlib.use("Agg")
@@ -124,23 +130,21 @@ def plot(counts, fema_web=False, include_emergency=True):
         "FEMA Disaster Request Denial Rates: Biden vs Trump 2nd Term",
         fontsize=13, fontweight="bold", ha="center", va="top", color="#111111",
     )
-    approvals_src = ("v1/FemaWebDisasterDeclarations" if fema_web
-                     else "v2/DisasterDeclarationsSummaries")
-    decl_scope = "DR + EM" if include_emergency else "DR only"
     fig.text(
         0.5, 0.90,
-        f"By state party leaning (two-thirds rule) · {decl_scope} · All incident types · {approvals_src}",
+        config_line(two_thirds=True, all_types=True,
+                    include_emergency=include_emergency, fema_web=fema_web),
         fontsize=8.5, ha="center", va="top", color="#555555",
     )
     fig.text(
         0.02, 0.01,
-        "Note: States classified as D/R when 2 of 3 offices (governor + both senators) belong to same party.\n"
-        "Source: Independent replication using FEMA Disaster Declarations Summaries and Declaration Denials APIs. "
+        "Note: States classified as D/R when 2 of 3 offices (governor + both senators) belong to same party at time of decision.\n"
+        "Source: Independent replication using OpenFEMA disaster declaration and Declaration Denials APIs. "
         "Inspired by POLITICO/E&E News reporting (Thomas Frank).",
         fontsize=7.5, va="bottom", ha="left", color="#888888", linespacing=1.5,
     )
 
-    plt.subplots_adjust(left=0.1, right=0.95, top=0.87, bottom=0.14)
+    plt.subplots_adjust(left=0.1, right=0.95, top=0.84, bottom=0.18)
     plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"Chart saved to {OUTPUT_PATH}")
     plt.close()
@@ -164,7 +168,8 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    approved, denied = fetch_data(fema_web=args.fema_web)
+    approved, denied = fetch_data(fema_web=args.fema_web,
+                                  include_emergency=args.include_emergency)
 
     counts = analyze(
         approved,

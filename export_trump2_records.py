@@ -96,6 +96,7 @@ def fetch_denials():
             f"?$top=1000&$skip={skip}"
             f"&$select=stateAbbreviation,incidentName,declarationRequestDate,"
             f"requestedIncidentTypes,currentRequestStatus,requestStatusDate,"
+            f"declarationRequestType,"
             f"iaProgramRequested,paProgramRequested,hmProgramRequested,ihProgramRequested,"
             f"region,tribalRequest"
             f"&$orderby=declarationRequestDate%20asc"
@@ -109,14 +110,21 @@ def fetch_denials():
             break
         skip += 1000
 
-    # Keep only confirmed turndowns in Trump 2 window
+    # Keep only Major Disaster turndowns decided in the Trump 2 window, matching
+    # the DR-only approvals and replicate_fema_analysis.analyze()'s dating.
     filtered = [
         r for r in all_recs
         if r.get("currentRequestStatus") == "Turndown"
-        and r.get("declarationRequestDate", "")[:10] >= CUTOFF
+        and r.get("declarationRequestType") == "Major Disaster"
+        and decision_date(r)[:10] >= CUTOFF
     ]
     print(f"Denials: {len(all_recs)} total → {len(filtered)} Turndowns since {CUTOFF}")
     return filtered
+
+
+def decision_date(rec):
+    """Date the denial was decided (falls back to the request date)."""
+    return rec.get("requestStatusDate") or rec.get("declarationRequestDate", "")
 
 
 # ── Classification helpers ─────────────────────────────────────────────────
@@ -195,9 +203,10 @@ def write_markdown(buckets, fema_web=False):
     lines.append("")
     lines.append(
         "Independent analysis of all approved and denied Major Disaster (DR) "
-        "requests since January 20, 2025, classified by state party trifecta "
-        "(governor + both U.S. senators from same party). Mixed and territory "
-        "records are included at the bottom for completeness."
+        "requests decided since January 20, 2025 (all incident types), classified "
+        "by state party trifecta (governor + both U.S. senators from same party) "
+        "at the time of the decision. Mixed and territory records are included "
+        "at the bottom for completeness."
     )
     lines.append("")
     lines.append(PROGRAM_NOTE)
@@ -288,7 +297,7 @@ if __name__ == "__main__":
 
     for rec in denials:
         state     = rec.get("stateAbbreviation", "").strip()
-        alignment = classify(state, rec["declarationRequestDate"])
+        alignment = classify(state, decision_date(rec))
         buckets[alignment]["denied"].append(rec)
 
     print("\nBucket summary:")

@@ -11,17 +11,25 @@ Independent replication of the POLITICO/E&E News analysis (Thomas Frank) showing
 | `replicate_fema_analysis.py` | Main analysis — fetches all FEMA data, computes approval rates by president and state party, outputs a line chart |
 | `export_trump2_records.py` | Exports all Trump 2nd term approved/denied records as a human-readable Markdown file |
 | `export_csv.py` | Row-level CSV of every approved/denied record with all classification columns (`fema_all_records.csv`) |
-| `biden_vs_trump2_chart.py` | Bar chart comparing Biden vs Trump 2nd term denial rates by state party |
+| `biden_vs_trump2_chart.py` | Bar chart comparing Biden vs Trump 2nd term denial rates by state party (two-thirds rule) |
 | `trump_combined_denial_chart.py` | Trump 1+2 combined denial rates under three classification methods (election / governor / trifecta) |
 | `trump2_sensitivity_chart.py` | Grouped bar chart showing Trump 2nd term denial rates across all 12 methodology combinations |
-| `trump2_scatter.py` | Scatterplot of state-level FEMA approval rate vs 2024 Trump vote share |
+| `trump2_scatter.py` | Scatterplot of state-level FEMA approval rate vs 2024 Trump vote share (`--include-emergency` adds EM on both sides) |
 | `request_behavior_analysis.py` | 4-panel chart testing whether the partisan gap reflects request behavior (volume, scope, incident mix) or decisionmaker behavior |
 
 All scripts support `--fema-web` (see below). Run any script with `--help` for full flag documentation.
 
 ### Pending-as-denial augmentation
 
-`replicate_fema_analysis.py` and `request_behavior_analysis.py` both accept `--include-pending <CSV>` (with optional `--pending-threshold-days N`, default 30). OpenFEMA only publishes requests after they're decided, so requests stuck in "Pending" status are invisible to the canonical pipeline. Pass a Disaster Tracker spreadsheet and any pending request older than the threshold is counted as a de-facto denial in the most recent president's column; the line chart marks the resulting drop with a hollow ghost marker.
+`replicate_fema_analysis.py` and `request_behavior_analysis.py` both accept `--include-pending <CSV>` (with optional `--pending-threshold-days N`, default 30). OpenFEMA only publishes requests after they're decided, so requests stuck in "Pending" status are invisible to the canonical pipeline. Pass a Disaster Tracker spreadsheet and any pending request older than the threshold is counted as a de-facto denial in the most recent president's column; the line chart marks the resulting drop with a hollow ghost marker. Pending rows whose state already has an OpenFEMA decision on a request dated within 3 days are skipped, so a stale tracker can't double-count.
+
+The tracker is the Revolving Door Project's [Trump disaster aid map](https://therevolvingdoorproject.org/?p=159357); its data is a public [Google Sheet](https://docs.google.com/spreadsheets/d/1VEeTSh1xHNB3EolYEcVECFtUURB3QBSzceUfVXnjJOI/edit?usp=sharing). Refresh the committed copy with:
+
+```
+curl -L "https://docs.google.com/spreadsheets/d/1VEeTSh1xHNB3EolYEcVECFtUURB3QBSzceUfVXnjJOI/export?format=csv" -o "Disaster Tracker - Interactive Map - Sheet1.csv"
+```
+
+The committed copy is the Oct 23, 2026 snapshot. Both the old ("Waiting Period", "N days and counting") and current ("Waiting Period (Days)") column formats are accepted.
 
 ---
 
@@ -31,8 +39,10 @@ All scripts support `--fema-web` (see below). Run any script with `--help` for f
 
 | Dataset | Default Endpoint | Alternative (`--fema-web`) |
 |---|---|---|
-| Approved declarations | `fema.gov/api/open/v2/DisasterDeclarationsSummaries` (~46,220 rows, one per county) | `fema.gov/api/open/v1/FemaWebDisasterDeclarations` (~5,168 rows, one per disaster) |
-| Denied requests | `fema.gov/api/open/v1/DeclarationDenials` (~1,288 rows) | same |
+| Approved declarations | `fema.gov/api/open/v2/DisasterDeclarationsSummaries` (~46,700 DR + ~21,700 EM rows, one per county) | `fema.gov/api/open/v1/FemaWebDisasterDeclarations` (~5,290 rows, one per disaster) |
+| Denied requests | `fema.gov/api/open/v1/DeclarationDenials` (~1,306 rows) | same |
+
+Row counts as of Oct 25, 2026. After deduplication the two approval endpoints give identical results in every flag combination.
 
 Both approval endpoints are paginated at 1,000 records per request and fetched exhaustively.
 
@@ -72,7 +82,9 @@ This ensures both sides are assigned to the president who made the decision, not
 
 ### State Party Classification
 
-A state's alignment is determined at the time of the request using a hardcoded `STATE_PARTY_DATA` dictionary covering all 50 states for every year from 1981 through 2026 (~2,300 state-year entries). Sources: National Governors Association historical records and senate.gov membership data.
+A state's alignment is determined at the time of the decision (the same date used for presidential assignment) using a hardcoded `STATE_PARTY_DATA` dictionary covering all 50 states for every year from 1981 through 2026 (~2,300 state-year entries). Sources: National Governors Association historical records and senate.gov membership data. Entries for 2009–2026 were re-verified against officeholder records in Oct 2026; earlier years have not been fully audited.
+
+Tribal requests are attributed to the state they fall in (both approvals and denials), even though tribes request declarations directly rather than through the governor.
 
 Three classification modes are available:
 
@@ -103,9 +115,11 @@ Records are assigned to a presidential term by declaration/decision date:
 
 | Category | Count | Notes |
 |---|---|---|
-| Territories & unclassified (AS, DC, GU, PR, VI, etc.) | ~138 | No governor/senator classification exists |
-| Mixed-alignment states | ~1,482 | Split partisan control; excluded by methodology |
-| Out-of-range dates | ~1,267 | Mostly pre-Reagan denial records; the denial database extends to 1953 |
+| Territories & unclassified (AS, DC, FM, GU, MH, MP, PR, PW, VI) | ~203 | No governor/senator classification exists |
+| Mixed-alignment states | ~1,794 | Split partisan control; excluded by methodology |
+| Out-of-range dates | ~1,396 | Pre-Reagan records; the databases extend back to 1953 |
+
+Counts are for `--fema-web --all-types --include-emergency` with trifecta classification, Oct 25, 2026.
 
 ### Approval Rate Formula
 
@@ -152,18 +166,19 @@ All flags can be freely combined. Output filenames are suffixed to reflect the a
 
 ---
 
-## Key Findings (Trump 2nd Term, as of March 2025)
+## Key Findings (Trump 2nd Term, as of Oct 25, 2026)
 
-Using the default methodology (trifecta, DR only, natural disasters):
-
-| Alignment | Approved | Denied | Approval Rate |
+| Configuration | Dem approved | Rep approved | Gap |
 |---|---|---|---|
-| Democratic trifecta | 4 | 9 | ~31% |
-| Republican trifecta | 27 | 9 | ~75% |
+| Default (trifecta, DR only, natural disasters) | 17 / 37 (45.9%) | 56 / 66 (84.8%) | 38.9 pts |
+| `--fema-web --all-types --include-emergency` (trifecta) | 25 / 49 (51.0%) | 70 / 85 (82.4%) | 31.4 pts |
+| …plus `--include-pending` (Oct 23 tracker) | 25 / 49 (51.0%) | 70 / 86 (81.4%) | 30.4 pts |
 
-The partisan gap is **robust across all 12 methodology combinations** tested in the sensitivity analysis — Democratic state denial rates are 20–54 percentage points higher than Republican states regardless of how states are classified or which declaration types are included.
+The partisan gap appears in **all 24 flag combinations**: Republican states' approval rate exceeds Democratic states' by 18.6–38.9 percentage points. It is narrowest under governor-only classification and widest under trifecta with major disasters only. Under Biden the same 24 combinations show gaps between −5.1 and +0.4 points, with Democratic states usually slightly ahead.
 
-Under Biden, denial rates were statistically identical between Dem and Rep states (~16% each). The gap under Trump's 2nd term is driven almost entirely by the Democratic state denial rate tripling, not by Republican states receiving unusually favorable treatment relative to historical norms.
+Republican states' Trump 2nd-term approval rate (81–85%) is close to their Biden-era rate (~84%), so the gap comes from the drop in Democratic states' approval rate rather than unusually favorable treatment of Republican states.
+
+Not yet in OpenFEMA as of Oct 25, 2026: the tracker lists Republican-trifecta rejections for Nebraska (Aug 3, 2026) and Idaho (Sep 1, 2026), both under appeal.
 
 ---
 

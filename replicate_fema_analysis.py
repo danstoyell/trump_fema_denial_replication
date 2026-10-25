@@ -130,7 +130,8 @@ STATE_PARTY_DATA = {
     # LOUISIANA
     **{("LA", y): ("R", "R", "R") for y in range(2024, 2027)},  # Landry/Cassidy/Kennedy
     **{("LA", y): ("D", "R", "R") for y in range(2016, 2024)},  # Edwards(D) -> Mixed
-    **{("LA", y): ("R", "R", "D") for y in range(2011, 2016)},  # Jindal(R)/Vitter(R)/Landrieu(D) -> Mixed
+    **{("LA", y): ("R", "R", "R") for y in range(2015, 2016)},  # Jindal(R)/Vitter(R)/Cassidy(R)
+    **{("LA", y): ("R", "R", "D") for y in range(2011, 2015)},  # Jindal(R)/Vitter(R)/Landrieu(D) -> Mixed
     **{("LA", y): ("R", "R", "D") for y in range(2008, 2011)},  # Jindal
     **{("LA", y): ("D", "R", "D") for y in range(2004, 2008)},  # Blanco(D) -> Mixed
     **{("LA", y): ("R", "D", "D") for y in range(1997, 2004)},  # Foster(R)/Breaux(D)/Landrieu(D) -> Mixed
@@ -139,8 +140,10 @@ STATE_PARTY_DATA = {
     # MISSOURI
     **{("MO", y): ("R", "R", "R") for y in range(2023, 2027)},  # Kehoe/Hawley/Schmitt
     **{("MO", y): ("R", "R", "R") for y in range(2019, 2023)},  # Parson/Blunt/Hawley
-    **{("MO", y): ("R", "D", "R") for y in range(2011, 2019)},  # Nixon/Greitens/Parson + McCaskill(D)/Blunt(R) -> Mixed
-    **{("MO", y): ("R", "D", "R") for y in range(2005, 2011)},  # Blunt(R) gov / McCaskill(D) / Bond(R) -> Mixed
+    **{("MO", y): ("R", "D", "R") for y in range(2017, 2019)},  # Greitens/Parson(R)/McCaskill(D)/Blunt(R) -> Mixed
+    **{("MO", y): ("D", "D", "R") for y in range(2009, 2017)},  # Nixon(D)/McCaskill(D)/Bond->Blunt(R) -> Mixed
+    **{("MO", y): ("R", "D", "R") for y in range(2007, 2009)},  # Blunt(R) gov / McCaskill(D) / Bond(R) -> Mixed
+    **{("MO", y): ("R", "R", "R") for y in range(2005, 2007)},  # Blunt(R) gov / Talent(R) / Bond(R)
     **{("MO", y): ("D", "D", "R") for y in range(2001, 2005)},  # Holden(D) / Carnahan(D) / Bond(R) -> Mixed
     **{("MO", y): ("D", "R", "R") for y in range(1993, 2001)},  # Carnahan(D) / Ashcroft then Bond(R) -> Mixed
     **{("MO", y): ("R", "R", "D") for y in range(1985, 1993)},  # Ashcroft(R)/Danforth(R)/Eagleton(D) -> Mixed
@@ -149,7 +152,8 @@ STATE_PARTY_DATA = {
     # NORTH CAROLINA
     **{("NC", y): ("D", "R", "R") for y in range(2017, 2025)},  # Cooper(D)/Burr then Budd(R)/Tillis(R) -> Mixed
     **{("NC", y): ("D", "R", "R") for y in range(2025, 2027)},  # Stein(D)/Budd(R)/Tillis(R) -> Mixed
-    **{("NC", y): ("R", "R", "D") for y in range(2013, 2017)},  # McCrory(R)/Burr(R)/Hagan(D) then Tillis(R)
+    **{("NC", y): ("R", "R", "R") for y in range(2015, 2017)},  # McCrory(R)/Burr(R)/Tillis(R)
+    **{("NC", y): ("R", "R", "D") for y in range(2013, 2015)},  # McCrory(R)/Burr(R)/Hagan(D) -> Mixed
     **{("NC", y): ("D", "R", "D") for y in range(2009, 2013)},  # Perdue(D)/Burr(R)/Hagan(D) -> Mixed
     **{("NC", y): ("D", "R", "D") for y in range(2005, 2009)},  # Easley(D)/Burr(R)/Dole(R) -> Mixed
     **{("NC", y): ("D", "R", "D") for y in range(1993, 2005)},  # Hunt/Easley(D)
@@ -158,8 +162,10 @@ STATE_PARTY_DATA = {
     
     # ILLINOIS - often D-trifecta recently
     **{("IL", y): ("D", "D", "D") for y in range(2019, 2027)},  # Pritzker/Durbin/Duckworth
-    **{("IL", y): ("R", "D", "D") for y in range(2015, 2019)},  # Rauner(R) -> Mixed
-    **{("IL", y): ("D", "D", "D") for y in range(2005, 2015)},  # Blagojevich/Quinn + Durbin/Obama->Kirk
+    **{("IL", y): ("R", "D", "D") for y in range(2017, 2019)},  # Rauner(R)/Durbin(D)/Duckworth(D) -> Mixed
+    **{("IL", y): ("R", "D", "R") for y in range(2015, 2017)},  # Rauner(R)/Durbin(D)/Kirk(R) -> Mixed
+    **{("IL", y): ("D", "D", "R") for y in range(2011, 2015)},  # Quinn(D)/Durbin(D)/Kirk(R) -> Mixed
+    **{("IL", y): ("D", "D", "D") for y in range(2005, 2011)},  # Blagojevich/Quinn(D) + Durbin/Obama->Burris(D)
     **{("IL", y): ("R", "D", "R") for y in range(1999, 2005)},  # Ryan/Blagojevich + Durbin/Fitzgerald
     **{("IL", y): ("R", "D", "R") for y in range(1991, 1999)},  # Edgar(R)/Simon then Moseley-Braun(D)/... -> Mixed
     **{("IL", y): ("R", "D", "R") for y in range(1981, 1991)},  # Thompson(R)
@@ -205,7 +211,9 @@ STATE_PARTY_DATA = {
     **{("NE", y): ("R", "D", "D") for y in range(1981, 1983)},  # Thone(R)/Zorinsky(D)/Exon(D) -> Mixed
     
     # ALABAMA - R trifecta
-    **{("AL", y): ("R", "R", "R") for y in range(2011, 2027)},
+    **{("AL", y): ("R", "R", "R") for y in range(2021, 2027)},  # Ivey(R)/Shelby->Britt(R)/Tuberville(R)
+    **{("AL", y): ("R", "R", "D") for y in range(2018, 2021)},  # Ivey(R)/Shelby(R)/Jones(D) -> Mixed
+    **{("AL", y): ("R", "R", "R") for y in range(2011, 2018)},  # Bentley/Ivey(R)/Shelby(R)/Sessions->Strange(R)
     **{("AL", y): ("R", "R", "R") for y in range(2003, 2011)},  # Riley(R)/Sessions/Shelby
     **{("AL", y): ("D", "R", "R") for y in range(1999, 2003)},  # Siegelman(D) -> Mixed
     **{("AL", y): ("R", "R", "R") for y in range(1995, 1999)},  # James(R)/Shelby(R)/Sessions(R)
@@ -233,21 +241,23 @@ STATE_PARTY_DATA = {
     # ARKANSAS
     **{("AR", y): ("R", "R", "R") for y in range(2015, 2027)},  # Hutchinson/Sanders + Boozman/Cotton
     **{("AR", y): ("D", "R", "D") for y in range(2011, 2015)},  # Beebe(D)/Boozman(R)/Pryor(D) -> Mixed
-    **{("AR", y): ("D", "D", "D") for y in range(2003, 2011)},  # Huckabee was R! -> Mixed
+    **{("AR", y): ("D", "D", "D") for y in range(2007, 2011)},  # Beebe(D)/Lincoln(D)/Pryor(D)
     **{("AR", y): ("R", "D", "D") for y in range(2003, 2007)},  # Huckabee(R)/Lincoln(D)/Pryor(D) -> Mixed
     **{("AR", y): ("D", "D", "D") for y in range(1981, 2003)},  # Clinton/Tucker/Huckabee govs, Bumpers/Pryor/Lincoln sens
     
     # WEST VIRGINIA
     **{("WV", y): ("R", "R", "R") for y in range(2025, 2027)},  # Justice->Morrisey(R)/Capito(R)/Justice(R)
-    **{("WV", y): ("R", "R", "D") for y in range(2017, 2025)},  # Justice(R)/Capito(R)/Manchin(D) -> Mixed
+    **{("WV", y): ("R", "R", "I") for y in range(2024, 2025)},  # Justice(R)/Capito(R)/Manchin(I) -> Mixed
+    **{("WV", y): ("R", "R", "D") for y in range(2017, 2024)},  # Justice(R)/Capito(R)/Manchin(D) -> Mixed
     **{("WV", y): ("D", "R", "D") for y in range(2015, 2017)},  # Tomblin(D)/Capito(R)/Manchin(D) -> Mixed
     **{("WV", y): ("D", "D", "D") for y in range(2010, 2015)},  # Tomblin(D)/Rockefeller(D)/Manchin(D)
     **{("WV", y): ("D", "D", "D") for y in range(2001, 2010)},  # Manchin/Wise(D) govs + Byrd/Rockefeller(D)
     **{("WV", y): ("D", "D", "D") for y in range(1981, 2001)},  # All D
     
     # KENTUCKY
-    **{("KY", y): ("D", "R", "R") for y in range(2019, 2027)},  # Beshear(D)/McConnell(R)/Paul(R) -> Mixed
-    **{("KY", y): ("R", "R", "R") for y in range(2015, 2019)},  # Bevin(R)/McConnell(R)/Paul(R)
+    **{("KY", y): ("D", "R", "R") for y in range(2020, 2027)},  # A. Beshear(D)/McConnell(R)/Paul(R) -> Mixed
+    **{("KY", y): ("R", "R", "R") for y in range(2016, 2020)},  # Bevin(R)/McConnell(R)/Paul(R)
+    **{("KY", y): ("D", "R", "R") for y in range(2015, 2016)},  # S. Beshear(D)/McConnell(R)/Paul(R) -> Mixed
     **{("KY", y): ("D", "R", "R") for y in range(2011, 2015)},  # Beshear(D)/McConnell(R)/Paul(R) -> Mixed
     **{("KY", y): ("D", "R", "R") for y in range(1999, 2011)},  # Patton/Fletcher/Beshear + McConnell(R)/Bunning(R)
     **{("KY", y): ("D", "R", "D") for y in range(1993, 1999)},  # Jones/Patton(D)/McConnell(R)/Ford(D) -> Mixed
@@ -272,7 +282,8 @@ STATE_PARTY_DATA = {
     
     # TENNESSEE
     **{("TN", y): ("R", "R", "R") for y in range(2019, 2027)},  # Lee(R)/Blackburn(R)/Hagerty(R)
-    **{("TN", y): ("R", "R", "R") for y in range(2007, 2019)},  # Haslam(R)/Alexander(R)/Corker(R)
+    **{("TN", y): ("R", "R", "R") for y in range(2011, 2019)},  # Haslam(R)/Alexander(R)/Corker(R)
+    **{("TN", y): ("D", "R", "R") for y in range(2007, 2011)},  # Bredesen(D)/Alexander(R)/Corker(R) -> Mixed
     **{("TN", y): ("D", "R", "R") for y in range(2003, 2007)},  # Bredesen(D)/Alexander(R)/Frist(R) -> Mixed
     **{("TN", y): ("R", "R", "R") for y in range(1995, 2003)},  # Sundquist(R)/Thompson(R)/Frist(R)
     **{("TN", y): ("D", "D", "D") for y in range(1987, 1995)},  # McWherter(D)/Gore then Mathews(D)/Sasser(D) -> D-trifecta
@@ -359,7 +370,8 @@ STATE_PARTY_DATA = {
     **{("PA", y): ("D", "R", "D") for y in range(2019, 2023)},  # Wolf(D)/Toomey(R)/Casey(D) -> Mixed
     **{("PA", y): ("D", "R", "D") for y in range(2015, 2019)},  # Wolf(D)/Toomey(R)/Casey(D) -> Mixed
     **{("PA", y): ("R", "R", "D") for y in range(2011, 2015)},  # Corbett(R)/Toomey(R)/Casey(D) -> Mixed
-    **{("PA", y): ("D", "R", "D") for y in range(2007, 2011)},  # Rendell(D)/Specter(R then D)/Casey(D) -> Mixed
+    **{("PA", y): ("D", "D", "D") for y in range(2009, 2011)},  # Rendell(D)/Specter(D from Apr 2009)/Casey(D)
+    **{("PA", y): ("D", "R", "D") for y in range(2007, 2009)},  # Rendell(D)/Specter(R)/Casey(D) -> Mixed
     **{("PA", y): ("D", "R", "R") for y in range(2003, 2007)},  # Rendell(D)/Specter(R)/Santorum(R) -> Mixed
     **{("PA", y): ("R", "R", "R") for y in range(1995, 2003)},  # Ridge/Schweiker(R)/Specter(R)/Santorum(R)
     **{("PA", y): ("D", "R", "R") for y in range(1991, 1995)},  # Casey(D)/Specter(R)/Wofford(D) -> Mixed
@@ -367,7 +379,8 @@ STATE_PARTY_DATA = {
     **{("PA", y): ("R", "R", "R") for y in range(1981, 1987)},  # Thornburgh(R)/Heinz(R)/Specter(R) -> R-trifecta
     
     # OHIO
-    **{("OH", y): ("R", "R", "R") for y in range(2019, 2027)},  # DeWine(R)/Portman->Moreno(R)/Vance->...(R)
+    **{("OH", y): ("R", "R", "R") for y in range(2025, 2027)},  # DeWine(R)/Moreno(R)/Husted(R)
+    **{("OH", y): ("R", "R", "D") for y in range(2019, 2025)},  # DeWine(R)/Portman->Vance(R)/Brown(D) -> Mixed
     **{("OH", y): ("R", "R", "D") for y in range(2011, 2019)},  # Kasich(R)/Portman(R)/Brown(D) -> Mixed
     **{("OH", y): ("D", "R", "D") for y in range(2007, 2011)},  # Strickland(D)/Voinovich(R)/Brown(D) -> Mixed
     **{("OH", y): ("R", "R", "R") for y in range(1999, 2007)},  # Taft(R)/DeWine(R)/Voinovich(R) -> R-trifecta
@@ -393,15 +406,16 @@ STATE_PARTY_DATA = {
     **{("SC", y): ("D", "R", "D") for y in range(1981, 1987)},  # Riley(D)/Thurmond(R)/Hollings(D) -> Mixed
     
     # HAWAII
-    **{("HI", y): ("D", "D", "D") for y in range(2012, 2027)},  # Abercrombie/Ige/Green(D) + Schatz/Hirono
-    **{("HI", y): ("R", "D", "D") for y in range(2002, 2012)},  # Lingle(R)/Akaka(D)/Inouye(D) -> Mixed
+    **{("HI", y): ("D", "D", "D") for y in range(2011, 2027)},  # Abercrombie/Ige/Green(D) + Inouye/Akaka->Schatz/Hirono(D)
+    **{("HI", y): ("R", "D", "D") for y in range(2002, 2011)},  # Lingle(R)/Akaka(D)/Inouye(D) -> Mixed
     **{("HI", y): ("D", "D", "D") for y in range(1981, 2002)},  # Various D
 
     # MASSACHUSETTS
     **{("MA", y): ("D", "D", "D") for y in range(2023, 2027)},  # Healey(D)/Warren(D)/Markey(D)
     **{("MA", y): ("R", "D", "D") for y in range(2015, 2023)},  # Baker(R)/Warren(D)/Markey(D) -> Mixed
     **{("MA", y): ("D", "D", "D") for y in range(2013, 2015)},  # Patrick(D)/Warren(D)/Markey(D)
-    **{("MA", y): ("D", "D", "D") for y in range(2007, 2013)},  # Patrick(D)/Kerry(D)/... 
+    **{("MA", y): ("D", "D", "R") for y in range(2010, 2013)},  # Patrick(D)/Kerry(D)/Brown(R) -> Mixed
+    **{("MA", y): ("D", "D", "D") for y in range(2007, 2010)},  # Patrick(D)/Kerry(D)/Kennedy->Kirk(D)
     **{("MA", y): ("R", "D", "D") for y in range(2003, 2007)},  # Romney(R)/Kerry(D)/Kennedy(D) -> Mixed
     **{("MA", y): ("R", "D", "D") for y in range(1991, 2003)},  # Weld/Cellucci/Swift(R)/Kerry(D)/Kennedy(D) -> Mixed
     **{("MA", y): ("D", "D", "D") for y in range(1983, 1991)},  # Dukakis(D)/Kerry(D)/Kennedy(D)
@@ -419,7 +433,8 @@ STATE_PARTY_DATA = {
     # CONNECTICUT
     **{("CT", y): ("D", "D", "D") for y in range(2023, 2027)},  # Lamont(D)/Blumenthal(D)/Murphy(D)
     **{("CT", y): ("D", "D", "D") for y in range(2019, 2023)},
-    **{("CT", y): ("D", "D", "D") for y in range(2011, 2019)},  # Malloy(D)/Blumenthal(D)/Murphy(D)
+    **{("CT", y): ("D", "D", "D") for y in range(2013, 2019)},  # Malloy(D)/Blumenthal(D)/Murphy(D)
+    **{("CT", y): ("D", "D", "I") for y in range(2011, 2013)},  # Malloy(D)/Blumenthal(D)/Lieberman(I) -> Mixed
     **{("CT", y): ("R", "D", "I") for y in range(2004, 2011)},  # Rell(R)/Dodd(D)/Lieberman(I) -> Mixed
     **{("CT", y): ("R", "D", "D") for y in range(1995, 2004)},  # Rowland(R)/Dodd(D)/Lieberman(D) -> Mixed
     **{("CT", y): ("I", "D", "D") for y in range(1991, 1995)},  # Weicker(I)/Dodd(D)/Lieberman(D) -> Mixed
@@ -445,17 +460,16 @@ STATE_PARTY_DATA = {
     **{("MN", y): ("R", "R", "R") for y in range(1981, 1983)},  # Quie(R)/Durenberger(R)/Boschwitz(R) -> R-trifecta
     
     # ARIZONA
-    **{("AZ", y): ("D", "R", "R") for y in range(2023, 2027)},  # Hobbs(D)/Sinema(I)->Gallego(D)/Kelly(D) 
     # Actually 2025+: Hobbs(D)/Gallego(D)/Kelly(D) = D trifecta
     **{("AZ", y): ("D", "D", "D") for y in range(2025, 2027)},  # Hobbs(D)/Gallego(D)/Kelly(D)
     **{("AZ", y): ("D", "I", "D") for y in range(2023, 2025)},  # Hobbs(D)/Sinema(I)/Kelly(D) -> Mixed
-    **{("AZ", y): ("R", "I", "D") for y in range(2021, 2023)},  # Ducey(R)/Sinema(D)/Kelly(D) -> Mixed
-    **{("AZ", y): ("R", "R", "R") for y in range(2019, 2021)},  # Ducey(R)/McSally(R)/... 
+    **{("AZ", y): ("R", "D", "D") for y in range(2021, 2023)},  # Ducey(R)/Sinema(D)/Kelly(D) -> Mixed
+    **{("AZ", y): ("R", "R", "D") for y in range(2019, 2021)},  # Ducey(R)/McSally(R)/Sinema(D) -> Mixed
     **{("AZ", y): ("R", "R", "R") for y in range(2015, 2019)},  # Ducey(R)/McCain(R)/Flake(R)
     **{("AZ", y): ("R", "R", "R") for y in range(2009, 2015)},  # Brewer(R)/McCain(R)/Kyl then Flake(R)
     **{("AZ", y): ("D", "R", "R") for y in range(2003, 2009)},  # Napolitano(D)/McCain(R)/Kyl(R) -> Mixed
     **{("AZ", y): ("R", "R", "R") for y in range(1987, 2003)},  # Symington/Hull(R)/McCain(R)/Kyl(R)
-    **{("AZ", y): ("D", "R", "R") for y in range(1981, 1987)},  # Babbitt(D)/Goldwater(R)/DeConcini(D) -> Mixed
+    **{("AZ", y): ("D", "R", "D") for y in range(1981, 1987)},  # Babbitt(D)/Goldwater(R)/DeConcini(D) -> Mixed
     
     # UTAH
     **{("UT", y): ("R", "R", "R") for y in range(1985, 2027)},  # Consistently R
@@ -467,24 +481,26 @@ STATE_PARTY_DATA = {
     **{("ID", y): ("D", "R", "R") for y in range(1981, 1987)},  # John Evans(D) gov/McClure(R)/Symms(R) -> Mixed
     
     # WYOMING
-    **{("WY", y): ("R", "R", "R") for y in range(1995, 2027)},
+    **{("WY", y): ("R", "R", "R") for y in range(2011, 2027)},  # Mead/Gordon(R)/Enzi->Lummis(R)/Barrasso(R)
+    **{("WY", y): ("D", "R", "R") for y in range(2003, 2011)},  # Freudenthal(D)/Enzi(R)/Thomas->Barrasso(R) -> Mixed
+    **{("WY", y): ("R", "R", "R") for y in range(1995, 2003)},  # Geringer(R)/Simpson->Enzi(R)/Thomas(R)
     **{("WY", y): ("D", "R", "R") for y in range(1987, 1995)},  # Sullivan(D)/Simpson(R)/Wallop(R) -> Mixed
     **{("WY", y): ("R", "R", "R") for y in range(1981, 1987)},
     
     # MONTANA
-    **{("MT", y): ("R", "R", "R") for y in range(2021, 2027)},  # Gianforte(R)/Daines(R)/Zinke or Sheehy(R)
+    **{("MT", y): ("R", "R", "R") for y in range(2025, 2027)},  # Gianforte(R)/Daines(R)/Sheehy(R)
+    **{("MT", y): ("R", "R", "D") for y in range(2021, 2025)},  # Gianforte(R)/Daines(R)/Tester(D) -> Mixed
     **{("MT", y): ("D", "R", "D") for y in range(2015, 2021)},  # Bullock(D)/Daines(R)/Tester(D) -> Mixed
-    **{("MT", y): ("D", "R", "D") for y in range(2007, 2015)},  # Schweitzer/Bullock(D)/Baucus->Daines(R)/Tester(D) -> Mixed
+    **{("MT", y): ("D", "D", "D") for y in range(2007, 2015)},  # Schweitzer/Bullock(D)/Baucus->Walsh(D)/Tester(D)
     **{("MT", y): ("D", "D", "R") for y in range(2005, 2007)},  # Schweitzer(D)/Baucus(D)/Burns(R) -> Mixed
     **{("MT", y): ("R", "D", "R") for y in range(2001, 2005)},  # Martz(R)/Baucus(D)/Burns(R) -> Mixed
     **{("MT", y): ("R", "D", "R") for y in range(1989, 2001)},  # Racicot(R)/Baucus(D)/Burns(R) -> Mixed
-    **{("MT", y): ("D", "D", "R") for y in range(1981, 1989)},  # Schwinden(D)/Baucus(D)/Melcher(D) -> D trifecta early 80s
+    **{("MT", y): ("D", "D", "D") for y in range(1981, 1989)},  # Schwinden(D)/Baucus(D)/Melcher(D)
     
     # NEVADA
     **{("NV", y): ("R", "D", "D") for y in range(2023, 2027)},  # Lombardo(R)/Cortez Masto(D)/Rosen(D) -> Mixed
     **{("NV", y): ("D", "D", "D") for y in range(2019, 2023)},  # Sisolak(D)/Cortez Masto(D)/Rosen(D)
-    **{("NV", y): ("R", "D", "D") for y in range(2015, 2019)},  # Sandoval(R)/Heller(R)/Cortez Masto(D) -> Mixed
-    **{("NV", y): ("R", "R", "R") for y in range(2011, 2015)},  # Sandoval(R)/Heller(R)/... actually Reid(D) was senator
+    **{("NV", y): ("R", "D", "R") for y in range(2015, 2019)},  # Sandoval(R)/Reid->Cortez Masto(D)/Heller(R) -> Mixed
     **{("NV", y): ("R", "D", "R") for y in range(2011, 2015)},  # Sandoval(R)/Reid(D)/Heller(R) -> Mixed
     **{("NV", y): ("R", "D", "R") for y in range(2007, 2011)},  # Gibbons(R)/Reid(D)/Ensign(R) -> Mixed
     **{("NV", y): ("R", "D", "R") for y in range(1999, 2007)},  # Guinn(R)/Reid(D)/Ensign(R) -> Mixed
@@ -508,7 +524,8 @@ STATE_PARTY_DATA = {
     
     # RHODE ISLAND
     **{("RI", y): ("D", "D", "D") for y in range(2015, 2027)},  # Raimondo/McKee(D)/Reed(D)/Whitehouse(D)
-    **{("RI", y): ("I", "D", "D") for y in range(2011, 2015)},  # Chafee(I)/Reed(D)/Whitehouse(D) -> Mixed
+    **{("RI", y): ("D", "D", "D") for y in range(2013, 2015)},  # Chafee(D from May 2013)/Reed(D)/Whitehouse(D)
+    **{("RI", y): ("I", "D", "D") for y in range(2011, 2013)},  # Chafee(I)/Reed(D)/Whitehouse(D) -> Mixed
     **{("RI", y): ("R", "D", "D") for y in range(2003, 2011)},  # Carcieri(R)/Reed(D)/Whitehouse(D) -> Mixed
     **{("RI", y): ("R", "D", "R") for y in range(1995, 2003)},  # Almond(R)/Reed(D)/Chafee(R) -> Mixed
     **{("RI", y): ("D", "D", "R") for y in range(1985, 1995)},  # DiPrete then Sundlun(D)/Pell(D)/Chafee(R) -> Mixed
@@ -952,13 +969,32 @@ _STATE_NAME_TO_ABBR = {
 }
 
 
+def decided_request_keys(approved_records, denied_records):
+    """
+    Map state -> request dates of every request OpenFEMA has already decided,
+    so a stale tracker's "Pending" rows aren't counted on top of the decision.
+    """
+    keys = defaultdict(set)
+    for rec in approved_records:
+        if rec.get("declarationRequestDate"):
+            keys[rec.get("state", "").strip()].add(rec["declarationRequestDate"][:10])
+    for rec in denied_records:
+        if rec.get("declarationRequestDate"):
+            keys[rec.get("stateAbbreviation", "").strip()].add(
+                rec["declarationRequestDate"][:10])
+    return keys
+
+
 def load_pending_as_denials(csv_path, threshold_days=30,
-                             governor_only=False, two_thirds=False):
+                             governor_only=False, two_thirds=False,
+                             decided=None):
     """
     Read a Disaster Tracker CSV and return pending-as-denial buckets:
         [(president, alignment, abbr, submission_iso, days_pending), ...]
     Tribal entries (no state-party alignment) and mixed-government states are
     skipped from D/R buckets and returned separately for reporting.
+    `decided` (from decided_request_keys) skips rows whose state already has an
+    OpenFEMA decision on a request dated within 3 days of the tracker's.
     """
     import csv as _csv
     import re as _re
@@ -983,10 +1019,17 @@ def load_pending_as_denials(csv_path, threshold_days=30,
             rows.append({"name": name, "abbr": abbr, "req_iso": req_iso,
                          "days": int(m.group(1))})
 
-    buckets, skipped_tribal, skipped_mixed = [], [], []
+    def _already_decided(row):
+        req = datetime.fromisoformat(row["req_iso"])
+        return any(abs((datetime.fromisoformat(d) - req).days) <= 3
+                   for d in (decided or {}).get(row["abbr"], ()))
+
+    buckets, skipped_tribal, skipped_mixed, skipped_decided = [], [], [], []
     for row in rows:
         if row["abbr"] is None:
             skipped_tribal.append(row); continue
+        if _already_decided(row):
+            skipped_decided.append(row); continue
         pres = get_president(row["req_iso"])
         align = get_state_alignment(row["abbr"], row["req_iso"],
                                     governor_only=governor_only,
@@ -994,12 +1037,12 @@ def load_pending_as_denials(csv_path, threshold_days=30,
         if not pres or align not in ("D", "R"):
             skipped_mixed.append({**row, "align": align}); continue
         buckets.append((pres, align, row["abbr"], row["req_iso"], row["days"]))
-    return buckets, skipped_tribal, skipped_mixed
+    return buckets, skipped_tribal, skipped_mixed, skipped_decided
 
 
 def augment_counts_with_pending(counts, csv_path, threshold_days=30,
                                  governor_only=False, two_thirds=False,
-                                 verbose=True):
+                                 verbose=True, decided=None):
     """
     Return a deep copy of `counts` with pending-as-denial increments applied,
     plus a metadata dict describing what was added/skipped.
@@ -1007,9 +1050,10 @@ def augment_counts_with_pending(counts, csv_path, threshold_days=30,
     """
     import copy
     augmented = copy.deepcopy(counts)
-    buckets, tribal, mixed = load_pending_as_denials(
+    buckets, tribal, mixed, already = load_pending_as_denials(
         csv_path, threshold_days=threshold_days,
         governor_only=governor_only, two_thirds=two_thirds,
+        decided=decided,
     )
 
     added = defaultdict(int)
@@ -1026,6 +1070,7 @@ def augment_counts_with_pending(counts, csv_path, threshold_days=30,
         "added": dict(added),
         "skipped_tribal": tribal,
         "skipped_mixed": mixed,
+        "skipped_decided": already,
         "total_added": sum(added.values()),
     }
     if verbose:
@@ -1036,6 +1081,9 @@ def augment_counts_with_pending(counts, csv_path, threshold_days=30,
         print(f"  Skipped mixed/unaligned: {len(mixed)}")
         for m in mixed:
             print(f"    {m['name']} ({m['abbr']}) — alignment={m.get('align')}")
+        print(f"  Skipped (already decided in OpenFEMA): {len(already)}")
+        for d in already:
+            print(f"    {d['name']} ({d['abbr']}) requested {d['req_iso']}")
     return augmented, meta
 
 
@@ -1043,9 +1091,43 @@ def augment_counts_with_pending(counts, csv_path, threshold_days=30,
 # PART 4: CHART GENERATION
 # ============================================================================
 
+def headline(d_rate, r_rate, president, governor_only=False, two_thirds=False):
+    """Chart title that states what the latest term's rates actually show."""
+    if governor_only:
+        dem, rep = "Democratic-governor", "Republican-governor"
+    elif two_thirds:
+        dem, rep = "Democratic-leaning", "Republican-leaning"
+    else:
+        dem, rep = "Democratic-led", "Republican-led"
+    if d_rate < 50 <= r_rate:
+        return f"{president} has denied most disaster requests from {dem} states"
+    if r_rate < 50 <= d_rate:
+        return f"{president} has denied most disaster requests from {rep} states"
+    if abs(d_rate - r_rate) < 5:
+        return (f"{president} has approved disaster requests from {dem} and "
+                f"{rep} states at similar rates")
+    return (f"{president} has approved {d_rate:.0f}% of disaster requests from "
+            f"{dem} states, {r_rate:.0f}% from {rep} states")
+
+
+def config_line(governor_only=False, two_thirds=False, all_types=False,
+                include_emergency=False, fema_web=False):
+    """One-line description of the flags a chart was built with."""
+    classification = ("Governor-only classification" if governor_only
+                      else "Two-of-three classification (gov + 2 senators)" if two_thirds
+                      else "Trifecta classification (gov + both senators)")
+    return " · ".join([
+        classification,
+        "Major disasters + emergencies" if include_emergency else "Major disasters only",
+        "All incident types" if all_types else "Natural disasters only",
+        "Approvals: OpenFEMA " + ("v1 FemaWeb" if fema_web else "v2 Summaries"),
+    ])
+
+
 def plot_chart(counts, output_path="fema_approval_rates.png",
                governor_only=False, two_thirds=False,
-               augmented_counts=None, pending_meta=None):
+               augmented_counts=None, pending_meta=None,
+               all_types=False, include_emergency=False, fema_web=False):
     """
     Generate the two-line chart replicating the Politico visualization.
     Requires matplotlib (pip install matplotlib).
@@ -1177,43 +1259,58 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
             "Presidential approval rates for disaster requests from Democratic-led "
             "states and Republican-led states"
         )
-    if governor_only:
-        main_title = (
-            "Partisan gap in disaster approvals narrows when classified by governor alone"
-        )
-    else:
-        main_title = (
-            "Trump has denied most disaster requests from Democratic-led states"
-        )
-    fig.text(
+    main_title = headline(d_rates[-1], r_rates[-1], valid_labels[-1],
+                          governor_only=governor_only, two_thirds=two_thirds)
+    config = config_line(governor_only=governor_only, two_thirds=two_thirds,
+                         all_types=all_types, include_emergency=include_emergency,
+                         fema_web=fema_web)
+    if pending_meta is not None and pending_meta.get("total_added"):
+        n = pending_meta["total_added"]
+        config += (f" · Hollow marker: +{n} request{'s' if n > 1 else ''} pending "
+                   f">{pending_meta['threshold_days']}d counted as denied")
+    title = fig.text(
         0.065, 0.97,
         main_title,
         fontsize=13, fontweight="bold", va="top", ha="left", color="#111111",
     )
+    # Data-dependent titles vary in length; shrink to fit the figure width.
+    fig.canvas.draw()
+    width = title.get_window_extent().width / fig.bbox.width
+    if width > 0.925:
+        title.set_fontsize(13 * 0.925 / width)
     fig.text(
-        0.065, 0.90,
+        0.065, 0.905,
         subtitle,
         fontsize=9.5, va="top", ha="left", color="#555555",
     )
+    config_text = fig.text(
+        0.065, 0.865,
+        config,
+        fontsize=8, va="top", ha="left", color="#777777",
+    )
+    fig.canvas.draw()
+    width = config_text.get_window_extent().width / fig.bbox.width
+    if width > 0.925:
+        config_text.set_fontsize(8 * 0.925 / width)
 
     # ── Footer ─────────────────────────────────────────────────────────────
     if governor_only:
         classification_note = (
-            "Note: States classified by the party of the governor at time of request."
+            "Note: States classified by the party of the governor at time of decision."
         )
     elif two_thirds:
         classification_note = (
             "Note: States classified by party when at least 2 of 3 offices "
-            "(governor + both senators) belong to the same party at time of request."
+            "(governor + both senators) belong to the same party at time of decision."
         )
     else:
         classification_note = (
             "Note: States classified by party when governor and senators at time of "
-            "request all belong to the same party."
+            "decision all belong to the same party."
         )
     footer = (
         classification_note + "\n"
-        "Source: Independent replication using FEMA Disaster Declarations Summaries "
+        "Source: Independent replication using OpenFEMA disaster declaration "
         "and Declaration Denials APIs. "
         "Inspired by POLITICO/E&E News reporting (Thomas Frank)."
     )
@@ -1221,7 +1318,7 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
              fontsize=8, va="bottom", ha="left", color="#888888",
              linespacing=1.6)
 
-    plt.subplots_adjust(left=0.07, right=0.86, top=0.87, bottom=0.20)
+    plt.subplots_adjust(left=0.07, right=0.86, top=0.83, bottom=0.20)
     plt.savefig(output_path, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"Chart saved to: {output_path}")
     plt.close()
@@ -1376,13 +1473,16 @@ CLASSIFICATION FLAGS (how states are categorized):
                 threshold_days=args.pending_threshold_days,
                 governor_only=args.governor_only,
                 two_thirds=args.two_thirds,
+                decided=decided_request_keys(approved, denied),
             )
             suffix += "_with_pending"
 
         output = f"fema_approval_rates{suffix}.png"
         plot_chart(results, output_path=output,
                    governor_only=args.governor_only, two_thirds=args.two_thirds,
-                   augmented_counts=augmented_counts, pending_meta=pending_meta)
+                   augmented_counts=augmented_counts, pending_meta=pending_meta,
+                   all_types=args.all_types, include_emergency=args.include_emergency,
+                   fema_web=args.fema_web)
 
     except Exception as e:
         print(f"\nAPI fetch failed: {e}")

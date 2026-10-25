@@ -1106,8 +1106,9 @@ def headline(d_rate, r_rate, president, governor_only=False, two_thirds=False):
     if abs(d_rate - r_rate) < 5:
         return (f"{president} has approved disaster requests from {dem} and "
                 f"{rep} states at similar rates")
-    return (f"{president} has approved {d_rate:.0f}% of disaster requests from "
-            f"{dem} states, {r_rate:.0f}% from {rep} states")
+    lower = dem if d_rate < r_rate else rep
+    return (f"Under {president}, {lower} states get a smaller share of "
+            f"disaster requests approved")
 
 
 def config_line(governor_only=False, two_thirds=False, all_types=False,
@@ -1244,21 +1245,6 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
     ax.spines["bottom"].set_color("#bbbbbb")
 
     # ── Title block (placed above axes in figure coordinates) ──────────────
-    if governor_only:
-        subtitle = (
-            "Presidential approval rates for disaster requests from states with "
-            "Democratic vs. Republican governors"
-        )
-    elif two_thirds:
-        subtitle = (
-            "Presidential approval rates for disaster requests from states where "
-            "2 of 3 offices (governor + senators) belong to the same party"
-        )
-    else:
-        subtitle = (
-            "Presidential approval rates for disaster requests from Democratic-led "
-            "states and Republican-led states"
-        )
     main_title = headline(d_rates[-1], r_rates[-1], valid_labels[-1],
                           governor_only=governor_only, two_thirds=two_thirds)
     config = config_line(governor_only=governor_only, two_thirds=two_thirds,
@@ -1268,30 +1254,43 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
         n = pending_meta["total_added"]
         config += (f" · Hollow marker: +{n} request{'s' if n > 1 else ''} pending "
                    f">{pending_meta['threshold_days']}d counted as denied")
+    # Text blocks wrap to the plot's width so they never widen the saved image
+    # (savefig uses bbox_inches="tight", which grows to fit any overhang).
+    TEXT_LEFT, AXES_RIGHT = 0.065, 0.86
+    renderer = fig.canvas.get_renderer()
+
+    def _wrap(artist):
+        max_px = (AXES_RIGHT - TEXT_LEFT) * fig.bbox.width
+        out = []
+        for para in artist.get_text().split("\n"):
+            line = ""
+            for word in para.split():
+                trial = f"{line} {word}".strip()
+                artist.set_text(trial)
+                if line and artist.get_window_extent(renderer).width > max_px:
+                    out.append(line)
+                    line = word
+                else:
+                    line = trial
+            out.append(line)
+        artist.set_text("\n".join(out))
+
+    def _extent(artist):
+        bb = artist.get_window_extent(renderer)
+        return bb.y0 / fig.bbox.height, bb.y1 / fig.bbox.height
+
     title = fig.text(
-        0.065, 0.97,
+        TEXT_LEFT, 0.97,
         main_title,
         fontsize=13, fontweight="bold", va="top", ha="left", color="#111111",
     )
-    # Data-dependent titles vary in length; shrink to fit the figure width.
-    fig.canvas.draw()
-    width = title.get_window_extent().width / fig.bbox.width
-    if width > 0.925:
-        title.set_fontsize(13 * 0.925 / width)
-    fig.text(
-        0.065, 0.905,
-        subtitle,
-        fontsize=9.5, va="top", ha="left", color="#555555",
-    )
+    _wrap(title)
     config_text = fig.text(
-        0.065, 0.865,
+        TEXT_LEFT, _extent(title)[0] - 0.02,
         config,
         fontsize=8, va="top", ha="left", color="#777777",
     )
-    fig.canvas.draw()
-    width = config_text.get_window_extent().width / fig.bbox.width
-    if width > 0.925:
-        config_text.set_fontsize(8 * 0.925 / width)
+    _wrap(config_text)
 
     # ── Footer ─────────────────────────────────────────────────────────────
     if governor_only:
@@ -1314,11 +1313,18 @@ def plot_chart(counts, output_path="fema_approval_rates.png",
         "and Declaration Denials APIs. "
         "Inspired by POLITICO/E&E News reporting (Thomas Frank)."
     )
-    fig.text(0.065, 0.01, footer,
-             fontsize=8, va="bottom", ha="left", color="#888888",
-             linespacing=1.6)
+    footer_text = fig.text(TEXT_LEFT, 0.01, footer,
+                           fontsize=8, va="bottom", ha="left", color="#888888",
+                           linespacing=1.6)
+    _wrap(footer_text)
 
-    plt.subplots_adjust(left=0.07, right=0.86, top=0.83, bottom=0.20)
+    # Fit the axes between the title block and the footer, leaving room for
+    # the x tick labels below the axes.
+    tick_h = max(t.get_window_extent(renderer).height
+                 for t in ax.get_xticklabels()) / fig.bbox.height
+    plt.subplots_adjust(left=0.07, right=AXES_RIGHT,
+                        top=_extent(config_text)[0] - 0.03,
+                        bottom=_extent(footer_text)[1] + tick_h + 0.06)
     plt.savefig(output_path, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"Chart saved to: {output_path}")
     plt.close()

@@ -2,7 +2,8 @@
 Trump 2nd Term FEMA Approval Rate vs 2024 Trump Vote Share — Scatterplot
 ========================================================================
 Each point is a state. X axis = Trump 2024 vote share. Y axis = FEMA approval
-rate during Trump's 2nd term. All declaration types (DR+EM), all incident types.
+rate during Trump's 2nd term. Major Disasters (DR) by default; --include-emergency
+adds Emergency (EM) declarations on both sides. All incident types.
 
 Output: trump2_scatter.png
 """
@@ -58,10 +59,10 @@ STATE_NAMES = {
 TRUMP2_START = "2025-01-20"
 
 
-def fetch_data(fema_web=False):
+def fetch_data(fema_web=False, include_emergency=False):
     if fema_web:
-        print("Fetching DR approvals from FemaWeb endpoint...")
-        approved = fetch_all_fema_web(include_emergency=False)
+        print("Fetching approvals from FemaWeb endpoint...")
+        approved = fetch_all_fema_web(include_emergency=include_emergency)
         print(f"  {len(approved)} rows")
     else:
         print("Fetching DR approvals...")
@@ -70,13 +71,21 @@ def fetch_data(fema_web=False):
             "DisasterDeclarationsSummaries",
         )
         print(f"  {len(approved)} rows")
+        if include_emergency:
+            print("Fetching EM approvals...")
+            em = fetch_all_pages(
+                lambda skip: fetch_declarations_page(skip, declaration_type="EM"),
+                "DisasterDeclarationsSummaries",
+            )
+            print(f"  {len(em)} rows")
+            approved = approved + em
     print("Fetching denials...")
     denied = fetch_all_pages(fetch_denials_page, "DeclarationDenials")
     print(f"  {len(denied)} rows")
     return approved, denied
 
 
-def compute_state_rates(approved_records, denied_records):
+def compute_state_rates(approved_records, denied_records, include_emergency=False):
     """
     Compute per-state approval rates for Trump 2nd term only.
     Returns dict: state -> {"approved": n, "denied": n}
@@ -102,11 +111,13 @@ def compute_state_rates(approved_records, denied_records):
         state = rec["state"]
         state_counts[state]["approved"] += 1
 
-    # Denials: Turndown + Major Disaster only + Trump 2 window
+    # Denials: Turndown + matching declaration type(s) + Trump 2 window
+    denial_types = ({"Major Disaster", "Emergency"} if include_emergency
+                    else {"Major Disaster"})
     for rec in denied_records:
         if rec.get("currentRequestStatus") != "Turndown":
             continue
-        if rec.get("declarationRequestType") != "Major Disaster":
+        if rec.get("declarationRequestType") not in denial_types:
             continue
         date = rec.get("requestStatusDate") or rec.get("declarationRequestDate", "")
         if not date or date[:10] < TRUMP2_START:
@@ -117,7 +128,7 @@ def compute_state_rates(approved_records, denied_records):
     return state_counts
 
 
-def plot(state_counts, fema_web=False):
+def plot(state_counts, fema_web=False, include_emergency=False):
     try:
         import matplotlib
         matplotlib.use("Agg")
@@ -173,22 +184,21 @@ def plot(state_counts, fema_web=False):
     # Per-state overrides (dx, dy in points) for crowded areas.
     LABEL_OFFSET_PTS = {
         # y=0% cluster (denied all): push above (below clips outside ylim=0)
-        "AZ": (0, 9), "CA": (0, 9), "HI": (0, 9),
-        "IL": (0, 9), "VT": (0, 9),
-        # y=100% cluster (approved all): push above
-        "AR": (0,  9), "GA": ( 14,  0), "IA": (  0,  9),
-        "IN": (0,  9), "LA": ( 14,  0), "MI": (-14,  0),
-        "MO": (0,  9), "MS": ( 14,  0), "MT": (-14,  0),
-        "NC": (0,  9), "ND": ( 14,  0), "SC": (  0,  9),
-        "TX": (0,  9), "WV": ( 14,  0),
-        # y=50% cluster: alternate above/below
-        "AK": ( 0,  9), "MD": (-14,  0), "MN": (-14,  0),
-        "OR": ( 0, -10), "SD": ( 14,  0), "WA": ( 0,  9),
-        "WI": ( 0, -10),
-        # other
-        "KS": ( 0,  9), "KY": ( 14,  0), "NE": ( 0, -10),
-        "NM": (-14,  0), "OK": ( 0,  9), "TN": ( 0, -10),
-        "VA": (-14,  0),
+        "VT": ( 0,  9), "RI": ( 0,  9), "NY": (-3, 12), "IL": ( 3, 12),
+        "NJ": ( 0,  9),
+        # y=100% cluster (approved all): alternate above/below, split pairs
+        "DE": (-9,  0), "NM": ( 0, 12), "VA": ( 0,-12), "NH": ( 0,  9),
+        "NV": ( 0,-10), "NC": ( 0,  9), "OH": (-3,-11), "IA": (-3, 12),
+        "TX": ( 3, 12), "FL": ( 3,-11), "SC": (-3, 12), "IN": ( 3, 12),
+        "UT": ( 0,-11), "MS": (12,  0), "AR": (-3, 12), "AL": ( 0,-11),
+        "ID": (-3, 12), "ND": ( 3, 12),
+        # mid-range
+        "MO": ( 0, 17), "KS": (-15, 0), "KY": (16,  0), "NE": (-12, 0),
+        "SD": (12,  0), "LA": (11,  0), "WV": (14,  0), "MT": (-17, 0),
+        "TN": ( 0,-15), "OK": ( 0, 13), "AK": ( 0, 13), "GA": (10,  0),
+        "WI": ( 0,-13), "HI": (-15, 0), "WA": (11,  0), "OR": ( 0,-12),
+        "MD": (-9,  0), "MA": ( 9,  0), "MI": (-11, 0), "CA": ( 0, 12),
+        "CO": (10,  0), "MN": (10,  0), "AZ": ( 0, 12),
     }
     for x, y, lbl in zip(xs, ys, labels):
         dx, dy = LABEL_OFFSET_PTS.get(lbl, (9, 0))
@@ -245,9 +255,11 @@ def plot(state_counts, fema_web=False):
         fontsize=13, fontweight="bold", ha="center", va="top", color="#111111",
     )
     approvals_src = "FemaWeb v1" if fema_web else "DisasterDeclarationsSummaries v2"
+    decl_scope = ("All declaration types (DR + EM)" if include_emergency
+                  else "Major Disasters (DR) only")
     fig.text(
         0.5, 0.93,
-        f"All declaration types (DR + EM) · All incident types · State trifecta classification · {approvals_src}",
+        f"{decl_scope} · All incident types · State trifecta classification · {approvals_src}",
         fontsize=8.5, ha="center", va="top", color="#555555",
     )
     fig.text(
@@ -275,10 +287,17 @@ if __name__ == "__main__":
         help="Use v1/FemaWebDisasterDeclarations (disaster-level) instead of "
              "v2/DisasterDeclarationsSummaries (county-level) for approvals.",
     )
+    parser.add_argument(
+        "--include-emergency",
+        action="store_true",
+        help="Include Emergency (EM) declarations on both sides. Default: DR only.",
+    )
     args = parser.parse_args()
 
-    approved, denied = fetch_data(fema_web=args.fema_web)
-    state_counts = compute_state_rates(approved, denied)
+    approved, denied = fetch_data(fema_web=args.fema_web,
+                                  include_emergency=args.include_emergency)
+    state_counts = compute_state_rates(approved, denied,
+                                       include_emergency=args.include_emergency)
 
     print("\nState-level Trump 2 results:")
     print(f"  {'State':<6} {'Trump%':>7} {'App':>5} {'Den':>5} {'Rate':>7}")
@@ -291,4 +310,5 @@ if __name__ == "__main__":
         rate = c["approved"] / total * 100
         print(f"  {state:<6} {TRUMP_2024[state]:>6.1f}% {c['approved']:>5} {c['denied']:>5} {rate:>6.1f}%")
 
-    plot(state_counts, fema_web=args.fema_web)
+    plot(state_counts, fema_web=args.fema_web,
+         include_emergency=args.include_emergency)
